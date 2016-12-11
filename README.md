@@ -1,4 +1,4 @@
-# JapaneseCalendar
+# Japanese Calendar [![Gem Version](https://badge.fury.io/rb/japanese_calendar.svg)](https://badge.fury.io/rb/japanese_calendar) [![Build Status](https://travis-ci.org/RyoYamamotoJP/japanese_calendar.svg?branch=master)](https://travis-ci.org/RyoYamamotoJP/japanese_calendar)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/japanese_calendar`. To experiment with that code, run `bin/console` for an interactive prompt.
 
@@ -38,4 +38,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
