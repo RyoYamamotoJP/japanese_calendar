@@ -1,8 +1,6 @@
 # Japanese Calendar [![Gem Version](https://badge.fury.io/rb/japanese_calendar.svg)](https://badge.fury.io/rb/japanese_calendar) [![Build Status](https://travis-ci.org/RyoYamamotoJP/japanese_calendar.svg?branch=master)](https://travis-ci.org/RyoYamamotoJP/japanese_calendar)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/japanese_calendar`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Japanese calendar utility for Ruby.
 
 ## Installation
 
@@ -22,7 +20,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To get the Japanese era name, use the `era_name` method:
+
+```
+Time.new(1989,  1,  8).era_name # => "平成"
+Time.new(1926, 12, 25).era_name # => "昭和"
+Time.new(1912,  7, 30).era_name # => "大正"
+Time.new(1868,  1, 25).era_name # => "明治"
+```
+
+You can convert to a Japanese year with the `era_year` method:
+
+```
+Time.new(2016, 12, 11).era_year # => 28
+Time.new(1989,  1,  7).era_year # => 64
+Time.new(1926, 12, 24).era_year # => 15
+Time.new(1912,  7, 29).era_year # => 45
+```
 
 ## Development
 
@@ -32,7 +46,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/japanese_calendar. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/RyoYamamotoJP/japanese_calendar. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
