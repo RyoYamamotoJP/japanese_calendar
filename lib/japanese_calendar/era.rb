@@ -25,7 +25,7 @@ module JapaneseCalendar
     #
     #   Time.new(2016, 12, 11).era_year # => 28
     #   Time.new(1989,  1,  7).era_year # => 64
-    #   Time.new(1926, 12, 24).era_year # => 14
+    #   Time.new(1926, 12, 24).era_year # => 15
     #   Time.new(1912,  7, 29).era_year # => 45
     #
     # Raises an error when the Japanese year cannot be found.
