@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ryo Yamamoto"]
   spec.email         = ["email@ryoyamamoto.jp"]
 
-  spec.summary       = "Japanese Calendar"
+  spec.summary       = "Japanese calendar utility for Ruby"
   spec.homepage      = "https://github.com/RyoYamamotoJP/japanese_calendar"
   spec.license       = "MIT"
 
