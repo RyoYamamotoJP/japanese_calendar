@@ -1,4 +1,4 @@
-# Japanese Calendar [![Gem Version](https://badge.fury.io/rb/japanese_calendar.svg)](https://badge.fury.io/rb/japanese_calendar) [![Build Status](https://travis-ci.org/RyoYamamotoJP/japanese_calendar.svg?branch=master)](https://travis-ci.org/RyoYamamotoJP/japanese_calendar)
+# Japanese Calendar [![Gem Version](https://badge.fury.io/rb/japanese_calendar.svg)](https://badge.fury.io/rb/japanese_calendar) [![Build Status](https://travis-ci.org/RyoYamamotoJP/japanese_calendar.svg?branch=master)](https://travis-ci.org/RyoYamamotoJP/japanese_calendar) [![Code Climate](https://codeclimate.com/github/RyoYamamotoJP/japanese_calendar/badges/gpa.svg)](https://codeclimate.com/github/RyoYamamotoJP/japanese_calendar)
 
 Japanese calendar utility for Ruby.
 
