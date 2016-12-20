@@ -1,5 +1,5 @@
 require "japanese_calendar/era"
 
 class Time
-  include JapaneseCalendar::Era
+  prepend JapaneseCalendar::Era
 end
