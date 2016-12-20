@@ -47,11 +47,11 @@ module JapaneseCalendar
     #   Time.new(1872, 12, 31).strftime("%K%J年") # => RuntimeError
     def strftime(format)
       string = format.dup
-      string.gsub!(/%J/,   "#{era_year}")
-      string.gsub!(/%K/,   "#{era_name}")
-      string.gsub!(/%O/,   "#{era_name(:romaji)}")
-      string.gsub!(/%\^O/, "#{era_name(:romaji).upcase}")
-      string.gsub!(/%o/,   "#{era_name(:romaji)[0]}")
+      string.gsub!(/%J/,   era_year.to_s)
+      string.gsub!(/%K/,   era_name.to_s)
+      string.gsub!(/%O/,   era_name(:romaji).to_s)
+      string.gsub!(/%\^O/, era_name(:romaji).upcase.to_s)
+      string.gsub!(/%o/,   era_name(:romaji)[0].to_s)
       super(string)
     end
 
