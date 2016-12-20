@@ -63,7 +63,7 @@ module JapaneseCalendar
         { name: { kanji: "昭和", romaji: "Showa" },  beginning_of_period: Time.new(1926, 12, 25) },
         { name: { kanji: "大正", romaji: "Taisho" }, beginning_of_period: Time.new(1912,  7, 30) },
         { name: { kanji: "明治", romaji: "Meiji" },  beginning_of_period: Time.new(1868,  1, 25) }
-      ]
+      ].freeze
 
       def find_era
         raise "#{self.class.name.downcase} out of range" if self < MEIJI_6
