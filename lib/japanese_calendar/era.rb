@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module JapaneseCalendar
   module Era
     # Returns the Japanese era name (nengo) since 1 January 1873 (Meiji 6).
