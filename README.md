@@ -20,13 +20,13 @@ Or install it yourself as:
 
 ## Usage
 
-To get the Japanese era name, use the `era_name` method:
+To get a Japanese era name, use the `era_name` method:
 
 ```
 Time.new(1989,  1,  8).era_name # => "平成"
 Time.new(1926, 12, 25).era_name # => "昭和"
 Time.new(1912,  7, 30).era_name # => "大正"
-Time.new(1868,  1, 25).era_name # => "明治"
+Time.new(1873,  1,  1).era_name # => "明治"
 ```
 
 You can convert to a Japanese year with the `era_year` method:
@@ -36,6 +36,22 @@ Time.new(2016, 12, 11).era_year # => 28
 Time.new(1989,  1,  7).era_year # => 64
 Time.new(1926, 12, 24).era_year # => 15
 Time.new(1912,  7, 29).era_year # => 45
+```
+
+To get a string representation of the Japanese era, use the `strftime` method:
+
+```
+time = Time.new(1989, 1, 1)
+time.strftime("%K")               # => "平成"
+time.strftime("%O")               # => "Heisei"
+time.strftime("%^O")              # => "HEISEI"
+time.strftime("%o")               # => "H"
+time.strftime("%J")               # => "01"
+time.strftime("%-J")              # => "1"
+time.strftime("%_J")              # => " 1"
+time.strftime("%K%-J年%-m月%-d日") # => "平成1年1月1日"
+time.strftime("%o%J.%m.%d")       # => H01.01.01
+time.strftime("%b %-d %O %-J")    # => Jan 1 Heisei 1
 ```
 
 ## Development
