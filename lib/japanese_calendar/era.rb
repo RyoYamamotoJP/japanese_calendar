@@ -40,14 +40,16 @@ module JapaneseCalendar
     #   date_of_birth.strftime("%o")  # => "S"
     #   date_of_birth.strftime("%J")  # => "53"
     #
-    #   date_of_birth.strftime("%K%J年")  # => "昭和53年"
+    #   date_of_birth.strftime("%K%-J年")  # => "昭和53年"
     #
     # Raises an error when the Japanese year cannot be found.
     #
-    #   Time.new(1872, 12, 31).strftime("%K%J年") # => RuntimeError
+    #   Time.new(1872, 12, 31).strftime("%K%-J年") # => RuntimeError
     def strftime(format)
       string = format.dup
-      string.gsub!(/%J/,   era_year.to_s)
+      string.gsub!(/%J/,   "%02d" % era_year)
+      string.gsub!(/%-J/,  "%d"   % era_year)
+      string.gsub!(/%_J/,  "%2d"  % era_year)
       string.gsub!(/%K/,   era_name.to_s)
       string.gsub!(/%O/,   era_name(:romaji).to_s)
       string.gsub!(/%\^O/, era_name(:romaji).upcase.to_s)

@@ -170,13 +170,13 @@ describe JapaneseCalendar::Era do
   end
 
   describe "#strftime" do
-    let(:time) { Time.new(1978, 7, 19) }
+    let(:time) { Time.new(1989, 1, 8) }
 
     context "with %K format" do
       let(:format) { "%K" }
 
       it "returns the era name" do
-        expect(time.strftime(format)).to eq("昭和")
+        expect(time.strftime(format)).to eq("平成")
       end
     end
 
@@ -184,7 +184,7 @@ describe JapaneseCalendar::Era do
       let(:format) { "%O" }
 
       it "returns the era name in romaji" do
-        expect(time.strftime(format)).to eq("Showa")
+        expect(time.strftime(format)).to eq("Heisei")
       end
     end
 
@@ -192,7 +192,7 @@ describe JapaneseCalendar::Era do
       let(:format) { "%^O" }
 
       it "returns the uppercased era name in romaji" do
-        expect(time.strftime(format)).to eq("SHOWA")
+        expect(time.strftime(format)).to eq("HEISEI")
       end
     end
 
@@ -200,15 +200,31 @@ describe JapaneseCalendar::Era do
       let(:format) { "%o" }
 
       it "returns the abbreviated era name in romaji" do
-        expect(time.strftime(format)).to eq("S")
+        expect(time.strftime(format)).to eq("H")
       end
     end
 
     context "with %J format" do
       let(:format) { "%J" }
 
+      it "returns a string representing the era year (zero-padded)" do
+        expect(time.strftime(format)).to eq("01")
+      end
+    end
+
+    context "with %-J format" do
+      let(:format) { "%-J" }
+
       it "returns a string representing the era year" do
-        expect(time.strftime(format)).to eq("53")
+        expect(time.strftime(format)).to eq("1")
+      end
+    end
+
+    context "with %_J format" do
+      let(:format) { "%_J" }
+
+      it "returns a string representing the era year (blank-padded)" do
+        expect(time.strftime(format)).to eq(" 1")
       end
     end
   end
