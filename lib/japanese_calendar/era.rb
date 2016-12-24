@@ -3,10 +3,21 @@ module JapaneseCalendar
   module Era
     # Returns the Japanese era name (nengo) since 1 January 1873 (Meiji 6).
     #
-    #   Time.new(1989,  1,  8).era_name # => "平成"
-    #   Time.new(1926, 12, 25).era_name # => "昭和"
-    #   Time.new(1912,  7, 30).era_name # => "大正"
-    #   Time.new(1873,  1,  1).era_name # => "明治"
+    #   heisei = Time.new(1989, 1, 8)  # => 1989-01-08 00:00:00 +0900
+    #   heisei.era_name                # => "平成"
+    #   heisei.era_name(:romaji)       # => "Heisei"
+    #
+    #   showa = Time.new(1926, 12, 25) # => 1926-12-25 00:00:00 +0900
+    #   showa.era_name                 # => "昭和"
+    #   showa.era_name(:romaji)        # => "Showa"
+    #
+    #   taisho = Time.new(1912, 7, 30) # => 1912-07-30 00:00:00 +0900
+    #   taisho.era_name                # => "大正"
+    #   taisho.era_name(:romaji)       # => "Taisho"
+    #
+    #   meiji = Time.new(1873, 1, 1)   # => 1873-01-01 00:00:00 +0900
+    #   meiji.era_name                 # => "明治"
+    #   meiji.era_name(:romaji)        # => "Meiji"
     #
     # Raises an error when the Japanese era name cannot be found.
     #
