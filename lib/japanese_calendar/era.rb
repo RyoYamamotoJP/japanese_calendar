@@ -84,10 +84,9 @@ module JapaneseCalendar
       ].freeze
 
       def find_era
-        raise "#{self.class.name.downcase} out of range" if self < MEIJI_6
-
-        ifnone = proc { raise "#{self.class.name.downcase} out of range" }
-        PERIODS.find(ifnone) { |period| period.beginning_of_period <= self }
+        error_proc = proc { raise "#{self.class.name.downcase} out of range" }
+        error_proc.call if self < MEIJI_6
+        PERIODS.find(error_proc) { |period| period.beginning_of_period <= self }
       end
   end
 end
