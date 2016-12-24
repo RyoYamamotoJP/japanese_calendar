@@ -13,7 +13,7 @@ module JapaneseCalendar
     #   Time.new(1872, 12, 31).era_name # => RuntimeError
     def era_name(character = :kanji)
       raise ArgumentError unless %i(kanji romaji).include?(character)
-      find_era[:name][character]
+      find_era.send("#{character}_name")
     end
 
     # Returns the Japanese year since 1 January 1873 (Meiji 6).
@@ -27,7 +27,7 @@ module JapaneseCalendar
     #
     #   Time.new(1872, 12, 31).era_year # => RuntimeError
     def era_year
-      year - find_era[:beginning_of_period].year + 1
+      year - find_era.beginning_of_period.year + 1
     end
 
     # Formats time according to the directives in the given format string.
@@ -58,20 +58,22 @@ module JapaneseCalendar
     end
 
     private
+      Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
+
       MEIJI_6 = Time.new(1873, 1, 1)
 
       PERIODS = [
-        { name: { kanji: "平成", romaji: "Heisei" }, beginning_of_period: Time.new(1989,  1,  8) },
-        { name: { kanji: "昭和", romaji: "Showa" },  beginning_of_period: Time.new(1926, 12, 25) },
-        { name: { kanji: "大正", romaji: "Taisho" }, beginning_of_period: Time.new(1912,  7, 30) },
-        { name: { kanji: "明治", romaji: "Meiji" },  beginning_of_period: Time.new(1868,  1, 25) }
+        Period.new(Time.new(1989,  1,  8), "平成", "Heisei").freeze,
+        Period.new(Time.new(1926, 12, 25), "昭和", "Showa" ).freeze,
+        Period.new(Time.new(1912,  7, 30), "大正", "Taisho").freeze,
+        Period.new(Time.new(1868,  1, 25), "明治", "Meiji" ).freeze
       ].freeze
 
       def find_era
         raise "#{self.class.name.downcase} out of range" if self < MEIJI_6
 
         ifnone = proc { raise "#{self.class.name.downcase} out of range" }
-        PERIODS.find(ifnone) { |period| period[:beginning_of_period] <= self }
+        PERIODS.find(ifnone) { |period| period.beginning_of_period <= self }
       end
   end
 end
