@@ -20,13 +20,22 @@ Or install it yourself as:
 
 ## Usage
 
-To get a Japanese era name, use the `era_name` method:
+To get the Japanese era name, use the `era_name` method:
 
 ```
 Time.new(1989,  1,  8).era_name # => "平成"
 Time.new(1926, 12, 25).era_name # => "昭和"
 Time.new(1912,  7, 30).era_name # => "大正"
 Time.new(1873,  1,  1).era_name # => "明治"
+```
+
+If you want to get the Japanese era name in romaji, pass `:romaji`:
+
+```
+Time.new(1989,  1,  8).era_name(:romaji) # => "Heisei"
+Time.new(1926, 12, 25).era_name(:romaji) # => "Showa"
+Time.new(1912,  7, 30).era_name(:romaji) # => "Taisho"
+Time.new(1873,  1,  1).era_name(:romaji) # => "Meiji"
 ```
 
 You can convert to a Japanese year with the `era_year` method:
