@@ -27,7 +27,7 @@ module JapaneseCalendar
         raise ArgumentError, "invalid character"
       end
 
-      find_era.send("#{character}_name")
+      current_era.send("#{character}_name")
     end
 
     # Returns the Japanese year since 1 January 1873 (Meiji 6).
@@ -41,7 +41,7 @@ module JapaneseCalendar
     #
     #   Time.new(1872, 12, 31).era_year # => RuntimeError
     def era_year
-      year - find_era.beginning_of_period.year + 1
+      year - current_era.beginning_of_period.year + 1
     end
 
     # Formats time according to the directives in the given format string.
@@ -83,11 +83,10 @@ module JapaneseCalendar
         Period.new(Time.new(1868,  1, 25), "明治", "Meiji" ).freeze
       ].freeze
 
-      def find_era
-        raise "#{self.class.name.downcase} out of range" if self < MEIJI_6
-
-        ifnone = proc { raise "#{self.class.name.downcase} out of range" }
-        PERIODS.find(ifnone) { |period| period.beginning_of_period <= self }
+      def current_era
+        error_proc = proc { raise "#{self.class.name.downcase} out of range" }
+        error_proc.call if self < MEIJI_6
+        PERIODS.find(error_proc) { |period| period.beginning_of_period <= self }
       end
   end
 end
