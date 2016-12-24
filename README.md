@@ -38,20 +38,28 @@ Time.new(1926, 12, 24).era_year # => 15
 Time.new(1912,  7, 29).era_year # => 45
 ```
 
-To get a string representation of the Japanese era, use the `strftime` method:
+To get a string representation of the Japanese calendar, use the `strftime` method:
 
 ```
 time = Time.new(1989, 1, 1)
-time.strftime("%K")               # => "平成"
-time.strftime("%O")               # => "Heisei"
-time.strftime("%^O")              # => "HEISEI"
-time.strftime("%o")               # => "H"
-time.strftime("%J")               # => "01"
-time.strftime("%-J")              # => "1"
-time.strftime("%_J")              # => " 1"
-time.strftime("%K%-J年%-m月%-d日") # => "平成1年1月1日"
-time.strftime("%o%J.%m.%d")       # => H01.01.01
-time.strftime("%b %-d %O %-J")    # => Jan 1 Heisei 1
+
+# Japanese era
+time.strftime("%K")  # => "平成"
+time.strftime("%O")  # => "Heisei"
+time.strftime("%^O") # => "HEISEI"
+time.strftime("%o")  # => "H"
+time.strftime("%J")  # => "01"
+time.strftime("%-J") # => "1"
+time.strftime("%_J") # => " 1"
+
+# Japanese weekday name
+time.strftime("%Q") # => "日曜日"
+time.strftime("%q") # => "日"
+
+# More examples
+time.strftime("%K%-J年%-m月%-d日(%q)") # => "平成1年1月1日(日)"
+time.strftime("%o%J.%m.%d")           # => H01.01.01
+time.strftime("%B %-d, %-Y (%O %-J)") # => January 1, 1989 (Heisei 1)
 ```
 
 ## Development
