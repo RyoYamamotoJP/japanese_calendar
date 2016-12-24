@@ -23,7 +23,10 @@ module JapaneseCalendar
     #
     #   Time.new(1872, 12, 31).era_name # => RuntimeError
     def era_name(character = :kanji)
-      raise ArgumentError unless %i(kanji romaji).include?(character)
+      unless %i(kanji romaji).include?(character)
+        raise ArgumentError, "invalid character"
+      end
+
       find_era.send("#{character}_name")
     end
 
