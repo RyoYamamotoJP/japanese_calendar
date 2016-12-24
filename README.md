@@ -58,8 +58,8 @@ time.strftime("%q") # => "日"
 
 # More examples
 time.strftime("%K%-J年%-m月%-d日(%q)") # => "平成1年1月1日(日)"
-time.strftime("%o%J.%m.%d")           # => H01.01.01
-time.strftime("%B %-d, %-Y (%O %-J)") # => January 1, 1989 (Heisei 1)
+time.strftime("%o%J.%m.%d")           # => "H01.01.01"
+time.strftime("%B %-d, %-Y (%O %-J)") # => "January 1, 1989 (Heisei 1)"
 ```
 
 ## Development
