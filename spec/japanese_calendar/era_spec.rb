@@ -99,6 +99,14 @@ describe JapaneseCalendar::Era do
         expect { before_meiji_6.era_name }.to raise_error(RuntimeError, "time out of range")
       end
     end
+
+    context "with an invalid character" do
+      let(:invalid_character) { :emoji }
+
+      it "raises an error" do
+        expect { Time.new.era_name(:invalid_character) }.to raise_error(ArgumentError, "invalid character")
+      end
+    end
   end
 
   describe "#era_year" do
