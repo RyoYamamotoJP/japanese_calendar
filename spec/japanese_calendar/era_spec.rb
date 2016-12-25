@@ -239,56 +239,77 @@ describe JapaneseCalendar::Era do
     context "with %K format" do
       let(:format) { "%K" }
 
-      it "returns the era name" do
+      it "returns the era name with a warning" do
         expect(time.strftime(format)).to eq("平成")
+        expect do
+          time.strftime(format)
+        end.to output(/%K is deprecated. Please use %JN instead./).to_stderr
       end
     end
 
     context "with %O format" do
       let(:format) { "%O" }
 
-      it "returns the era name in romaji" do
+      it "returns the era name in romaji with a warning" do
         expect(time.strftime(format)).to eq("Heisei")
+        expect do
+          time.strftime(format)
+        end.to output(/%O is deprecated. Please use %JR instead./).to_stderr
       end
     end
 
     context "with %^O format" do
       let(:format) { "%^O" }
 
-      it "returns the uppercased era name in romaji" do
+      it "returns the uppercased era name in romaji with a warning" do
         expect(time.strftime(format)).to eq("HEISEI")
+        expect do
+          time.strftime(format)
+        end.to output(/%\^O is deprecated. Please use %\^JR instead./).to_stderr
       end
     end
 
     context "with %o format" do
       let(:format) { "%o" }
 
-      it "returns the abbreviated era name in romaji" do
+      it "returns the abbreviated era name in romaji with a warning" do
         expect(time.strftime(format)).to eq("H")
+        expect do
+          time.strftime(format)
+        end.to output(/%o is deprecated. Please use %Jr instead./).to_stderr
       end
     end
 
     context "with %J format" do
       let(:format) { "%J" }
 
-      it "returns a string representing the era year (zero-padded)" do
+      it "returns a string representing the era year (zero-padded) with a warning" do
         expect(time.strftime(format)).to eq("01")
+        expect do
+          time.strftime(format)
+        end.to output(/%J is deprecated. Please use %Jy instead./).to_stderr
       end
     end
 
     context "with %-J format" do
       let(:format) { "%-J" }
 
-      it "returns a string representing the era year" do
+      it "returns a string representing the era year with a warning" do
         expect(time.strftime(format)).to eq("1")
+        expect do
+          time.strftime(format)
+        end.to output(/%-J is deprecated. Please use %-Jy instead./).to_stderr
       end
     end
 
     context "with %_J format" do
       let(:format) { "%_J" }
 
-      it "returns a string representing the era year (blank-padded)" do
+      it "returns a string representing the era year (blank-padded) with a warning" do
         expect(time.strftime(format)).to eq(" 1")
+        expect do
+          time.strftime(format)
+        end.to output(/%_J is deprecated. Please use %_Jy instead./).to_stderr
       end
     end
   end

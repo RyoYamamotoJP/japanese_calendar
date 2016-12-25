@@ -23,16 +23,22 @@ describe JapaneseCalendar::Weekday do
       context "with %Q format" do
         let(:format) { "%Q" }
 
-        it "returns \"#{weekday}\"" do
+        it "returns \"#{weekday}\" with a warning" do
           expect(subject.strftime(format)).to eq(weekday)
+          expect do
+            subject.strftime(format)
+          end.to output(/%Q is deprecated. Please use %JA instead./).to_stderr
         end
       end
 
       context "with %q format" do
         let(:format) { "%q" }
 
-        it "returns \"#{weekday[0]}\"" do
+        it "returns \"#{weekday[0]}\" with a warning" do
           expect(subject.strftime(format)).to eq(weekday[0])
+          expect do
+            subject.strftime(format)
+          end.to output(/%q is deprecated. Please use %Ja instead./).to_stderr
         end
       end
     end
