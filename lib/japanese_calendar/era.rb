@@ -64,10 +64,10 @@ module JapaneseCalendar
       string.gsub!(/%J/,   "%02d" % era_year)
       string.gsub!(/%-J/,  "%d"   % era_year)
       string.gsub!(/%_J/,  "%2d"  % era_year)
-      string.gsub!(/%K/,   era_name.to_s)
-      string.gsub!(/%O/,   era_name(:romaji).to_s)
-      string.gsub!(/%\^O/, era_name(:romaji).upcase.to_s)
-      string.gsub!(/%o/,   era_name(:romaji)[0].to_s)
+      string.gsub!(/%K/,   era_name)
+      string.gsub!(/%O/,   era_name(:romaji))
+      string.gsub!(/%\^O/, era_name(:romaji).upcase)
+      string.gsub!(/%o/,   era_name(:romaji)[0])
       super(string)
     end
 
