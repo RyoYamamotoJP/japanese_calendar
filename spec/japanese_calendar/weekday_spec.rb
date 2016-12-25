@@ -4,6 +4,22 @@ require "spec_helper"
 describe JapaneseCalendar::Weekday do
   shared_examples "a weekday" do |weekday|
     describe "#strftime" do
+      context "with %JA format" do
+        let(:format) { "%JA" }
+
+        it "returns \"#{weekday}\"" do
+          expect(subject.strftime(format)).to eq(weekday)
+        end
+      end
+
+      context "with %Ja format" do
+        let(:format) { "%Ja" }
+
+        it "returns \"#{weekday[0]}\"" do
+          expect(subject.strftime(format)).to eq(weekday[0])
+        end
+      end
+
       context "with %Q format" do
         let(:format) { "%Q" }
 
