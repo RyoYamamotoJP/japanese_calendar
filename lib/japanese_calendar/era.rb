@@ -78,18 +78,20 @@ module JapaneseCalendar
       Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
 
       PERIODS = [
-        Period.new(Time.new(1989,  1,  8), "平成", "Heisei").freeze,
-        Period.new(Time.new(1926, 12, 25), "昭和", "Showa" ).freeze,
-        Period.new(Time.new(1912,  7, 30), "大正", "Taisho").freeze,
-        Period.new(Time.new(1868,  1, 25), "明治", "Meiji" ).freeze
+        Period.new(Date.new(1989,  1,  8), "平成", "Heisei").freeze,
+        Period.new(Date.new(1926, 12, 25), "昭和", "Showa" ).freeze,
+        Period.new(Date.new(1912,  7, 30), "大正", "Taisho").freeze,
+        Period.new(Date.new(1868,  1, 25), "明治", "Meiji" ).freeze
       ].freeze
 
-      MEIJI_6 = Time.new(1873, 1, 1)
+      MEIJI_6 = Date.new(1873, 1, 1)
 
       def current_era
         error_proc = proc { raise "#{self.class.name.downcase} out of range" }
-        error_proc.call if self < MEIJI_6
-        PERIODS.find(error_proc) { |period| period.beginning_of_period <= self }
+        error_proc.call if self.to_date < MEIJI_6
+        PERIODS.find(error_proc) do |period|
+          period.beginning_of_period <= self.to_date
+        end
       end
 
       def deprecated_japanese_calendar_era_name_strftime(string)
