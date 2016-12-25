@@ -180,6 +180,62 @@ describe JapaneseCalendar::Era do
   describe "#strftime" do
     let(:time) { Time.new(1989, 1, 8) }
 
+    context "with %JN format" do
+      let(:format) { "%JN" }
+
+      it "returns the era name" do
+        expect(time.strftime(format)).to eq("平成")
+      end
+    end
+
+    context "with %JR format" do
+      let(:format) { "%JR" }
+
+      it "returns the era name in romaji" do
+        expect(time.strftime(format)).to eq("Heisei")
+      end
+    end
+
+    context "with %^JR format" do
+      let(:format) { "%^JR" }
+
+      it "returns the uppercased era name in romaji" do
+        expect(time.strftime(format)).to eq("HEISEI")
+      end
+    end
+
+    context "with %Jr format" do
+      let(:format) { "%Jr" }
+
+      it "returns the abbreviated era name in romaji" do
+        expect(time.strftime(format)).to eq("H")
+      end
+    end
+
+    context "with %Jy format" do
+      let(:format) { "%Jy" }
+
+      it "returns a string representing the era year (zero-padded)" do
+        expect(time.strftime(format)).to eq("01")
+      end
+    end
+
+    context "with %-Jy format" do
+      let(:format) { "%-Jy" }
+
+      it "returns a string representing the era year" do
+        expect(time.strftime(format)).to eq("1")
+      end
+    end
+
+    context "with %_Jy format" do
+      let(:format) { "%_Jy" }
+
+      it "returns a string representing the era year (blank-padded)" do
+        expect(time.strftime(format)).to eq(" 1")
+      end
+    end
+
     context "with %K format" do
       let(:format) { "%K" }
 

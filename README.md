@@ -53,22 +53,22 @@ To get a string representation of the Japanese calendar, use the `strftime` meth
 time = Time.new(1989, 1, 1)
 
 # Japanese era
-time.strftime("%K")  # => "平成"
-time.strftime("%O")  # => "Heisei"
-time.strftime("%^O") # => "HEISEI"
-time.strftime("%o")  # => "H"
-time.strftime("%J")  # => "01"
-time.strftime("%-J") # => "1"
-time.strftime("%_J") # => " 1"
+time.strftime("%JN")  # => "平成"
+time.strftime("%JR")  # => "Heisei"
+time.strftime("%^JR") # => "HEISEI"
+time.strftime("%Jr")  # => "H"
+time.strftime("%Jy")  # => "01"
+time.strftime("%-Jy") # => "1"
+time.strftime("%_Jy") # => " 1"
 
 # Japanese weekday name
 time.strftime("%JA") # => "日曜日"
 time.strftime("%Ja") # => "日"
 
 # More examples
-time.strftime("%K%-J年%-m月%-d日(%Ja)") # => "平成1年1月1日(日)"
-time.strftime("%o%J.%m.%d")            # => "H01.01.01"
-time.strftime("%B %-d, %-Y (%O %-J)")  # => "January 1, 1989 (Heisei 1)"
+time.strftime("%JN%-Jy年%-m月%-d日(%Ja)") # => "平成1年1月1日(日)"
+time.strftime("%Jr%Jy.%m.%d")            # => "H01.01.01"
+time.strftime("%B %-d, %-Y (%JR %-Jy)")  # => "January 1, 1989 (Heisei 1)"
 ```
 
 ## Development
