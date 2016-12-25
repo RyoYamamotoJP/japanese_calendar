@@ -320,6 +320,10 @@ describe JapaneseCalendar::Era do
     end
   end
 
+  describe DateTime do
+    it_behaves_like "a era"
+  end
+
   describe Date do
     it_behaves_like "a era"
   end
