@@ -61,20 +61,19 @@ module JapaneseCalendar
     #   Time.new(1872, 12, 31).strftime("%K%-J年") # => RuntimeError
     def strftime(format)
       string = format.dup
-      string.gsub!(/%J/,   "%02d" % era_year)
-      string.gsub!(/%-J/,  "%d"   % era_year)
-      string.gsub!(/%_J/,  "%2d"  % era_year)
       string.gsub!(/%K/,   era_name)
       string.gsub!(/%O/,   era_name(:romaji))
       string.gsub!(/%\^O/, era_name(:romaji).upcase)
       string.gsub!(/%o/,   era_name(:romaji)[0])
+      string.gsub!(/%J/,   "%02d" % era_year)
+      string.gsub!(/%-J/,  "%d"   % era_year)
+      string.gsub!(/%_J/,  "%2d"  % era_year)
       super(string)
     end
 
     private
-      Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
 
-      MEIJI_6 = Time.new(1873, 1, 1)
+      Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
 
       PERIODS = [
         Period.new(Time.new(1989,  1,  8), "平成", "Heisei").freeze,
@@ -82,6 +81,8 @@ module JapaneseCalendar
         Period.new(Time.new(1912,  7, 30), "大正", "Taisho").freeze,
         Period.new(Time.new(1868,  1, 25), "明治", "Meiji" ).freeze
       ].freeze
+
+      MEIJI_6 = Time.new(1873, 1, 1)
 
       def current_era
         error_proc = proc { raise "#{self.class.name.downcase} out of range" }
