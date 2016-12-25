@@ -48,26 +48,28 @@ module JapaneseCalendar
     #
     #   date_of_birth = Time.new(1978, 7, 19)
     #
-    #   date_of_birth.strftime("%K")  # => "昭和"
-    #   date_of_birth.strftime("%O")  # => "Showa"
-    #   date_of_birth.strftime("%^O") # => "SHOWA"
-    #   date_of_birth.strftime("%o")  # => "S"
-    #   date_of_birth.strftime("%J")  # => "53"
+    #   date_of_birth.strftime("%JN")  # => "昭和"
+    #   date_of_birth.strftime("%JR")  # => "Showa"
+    #   date_of_birth.strftime("%^JR") # => "SHOWA"
+    #   date_of_birth.strftime("%Jr")  # => "S"
+    #   date_of_birth.strftime("%Jy")  # => "53"
     #
-    #   date_of_birth.strftime("%K%-J年")  # => "昭和53年"
+    #   date_of_birth.strftime("%JN%-Jy年")  # => "昭和53年"
     #
     # Raises an error when the Japanese year cannot be found.
     #
-    #   Time.new(1872, 12, 31).strftime("%K%-J年") # => RuntimeError
+    #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
     def strftime(format)
       string = format.dup
-      string.gsub!(/%K/,   era_name)
-      string.gsub!(/%O/,   era_name(:romaji))
-      string.gsub!(/%\^O/, era_name(:romaji).upcase)
-      string.gsub!(/%o/,   era_name(:romaji)[0])
-      string.gsub!(/%J/,   "%02d" % era_year)
-      string.gsub!(/%-J/,  "%d"   % era_year)
-      string.gsub!(/%_J/,  "%2d"  % era_year)
+      string.gsub!(/%JN/,   era_name)
+      string.gsub!(/%JR/,   era_name(:romaji))
+      string.gsub!(/%\^JR/, era_name(:romaji).upcase)
+      string.gsub!(/%Jr/,   era_name(:romaji)[0])
+      string.gsub!(/%Jy/,   "%02d" % era_year)
+      string.gsub!(/%-Jy/,  "%d"   % era_year)
+      string.gsub!(/%_Jy/,  "%2d"  % era_year)
+      deprecated_japanese_calendar_era_name_strftime(string)
+      deprecated_japanese_calendar_era_year_strftime(string)
       super(string)
     end
 
@@ -88,6 +90,40 @@ module JapaneseCalendar
         error_proc = proc { raise "#{self.class.name.downcase} out of range" }
         error_proc.call if self < MEIJI_6
         PERIODS.find(error_proc) { |period| period.beginning_of_period <= self }
+      end
+
+      def deprecated_japanese_calendar_era_name_strftime(string)
+        if string =~ /%K/
+          warn "%K is deprecated. Please use %JN instead."
+          string.gsub!(/%K/, era_name)
+        end
+        if string =~ /%O/
+          warn "%O is deprecated. Please use %JR instead."
+          string.gsub!(/%O/, era_name(:romaji))
+        end
+        if string =~ /%\^O/
+          warn "%^O is deprecated. Please use %^JR instead."
+          string.gsub!(/%\^O/, era_name(:romaji).upcase)
+        end
+        if string =~ /%o/
+          warn "%o is deprecated. Please use %Jr instead."
+          string.gsub!(/%o/, era_name(:romaji)[0])
+        end
+      end
+
+      def deprecated_japanese_calendar_era_year_strftime(string)
+        if string =~ /%J/
+          warn "%J is deprecated. Please use %Jy instead."
+          string.gsub!(/%J/, "%02d" % era_year)
+        end
+        if string =~ /%-J/
+          warn "%-J is deprecated. Please use %-Jy instead."
+          string.gsub!(/%-J/, "%d" % era_year)
+        end
+        if string =~ /%_J/
+          warn "%_J is deprecated. Please use %_Jy instead."
+          string.gsub!(/%_J/, "%2d" % era_year)
+        end
       end
   end
 end

@@ -4,19 +4,41 @@ require "spec_helper"
 describe JapaneseCalendar::Weekday do
   shared_examples "a weekday" do |weekday|
     describe "#strftime" do
-      context "with %Q format" do
-        let(:format) { "%Q" }
+      context "with %JA format" do
+        let(:format) { "%JA" }
 
         it "returns \"#{weekday}\"" do
           expect(subject.strftime(format)).to eq(weekday)
         end
       end
 
-      context "with %q format" do
-        let(:format) { "%q" }
+      context "with %Ja format" do
+        let(:format) { "%Ja" }
 
         it "returns \"#{weekday[0]}\"" do
           expect(subject.strftime(format)).to eq(weekday[0])
+        end
+      end
+
+      context "with %Q format" do
+        let(:format) { "%Q" }
+
+        it "returns \"#{weekday}\" with a warning" do
+          expect(subject.strftime(format)).to eq(weekday)
+          expect do
+            subject.strftime(format)
+          end.to output(/%Q is deprecated. Please use %JA instead./).to_stderr
+        end
+      end
+
+      context "with %q format" do
+        let(:format) { "%q" }
+
+        it "returns \"#{weekday[0]}\" with a warning" do
+          expect(subject.strftime(format)).to eq(weekday[0])
+          expect do
+            subject.strftime(format)
+          end.to output(/%q is deprecated. Please use %Ja instead./).to_stderr
         end
       end
     end
