@@ -4,14 +4,36 @@ require "spec_helper"
 describe JapaneseCalendar::Era do
   shared_examples "a era" do
     describe "#era_name" do
+      context "in the Reiwa period" do
+        let(:beginning_of_period) { subject.class.new(2019, 5, 1) }
+
+        context "in kanji" do
+          let(:character) { :kanji }
+
+          it 'returns "令和"' do
+            expect(beginning_of_period.era_name(character)).to eq("令和")
+          end
+        end
+
+        context "in romaji" do
+          let(:character) { :romaji }
+
+          it 'returns "Reiwa"' do
+            expect(beginning_of_period.era_name(character)).to eq("Reiwa")
+          end
+        end
+      end
+
       context "in the Heisei period" do
-        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
+        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
 
         context "in kanji" do
           let(:character) { :kanji }
 
           it 'returns "平成"' do
             expect(beginning_of_period.era_name(character)).to eq("平成")
+            expect(end_of_period.era_name(character)).to       eq("平成")
           end
         end
 
@@ -20,6 +42,7 @@ describe JapaneseCalendar::Era do
 
           it 'returns "Heisei"' do
             expect(beginning_of_period.era_name(character)).to eq("Heisei")
+            expect(end_of_period.era_name(character)).to       eq("Heisei")
           end
         end
       end
@@ -115,6 +138,22 @@ describe JapaneseCalendar::Era do
     end
 
     describe "#era_year" do
+      context "on the first day of the Reiwa period" do
+        let(:first_day_of_period) { subject.class.new(2019, 5, 1) }
+
+        it "returns 1" do
+          expect(first_day_of_period.era_year).to eq(1)
+        end
+      end
+
+      context "on the last day of the Heisei period" do
+        let(:last_day_of_period) { subject.class.new(2019, 4, 30) }
+
+        it "returns 31" do
+          expect(last_day_of_period.era_year).to eq(31)
+        end
+      end
+
       context "on the first day of the Heisei period" do
         let(:first_day_of_period) { subject.class.new(1989, 1, 8) }
 
