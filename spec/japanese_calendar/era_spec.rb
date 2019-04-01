@@ -4,14 +4,36 @@ require "spec_helper"
 describe JapaneseCalendar::Era do
   shared_examples "a era" do
     describe "#era_name" do
+      context "in the Reiwa period" do
+        let(:beginning_of_period) { subject.class.new(2019, 5, 1) }
+
+        context "in kanji" do
+          let(:character) { :kanji }
+
+          it 'returns "令和"' do
+            expect(beginning_of_period.era_name(character)).to eq("令和")
+          end
+        end
+
+        context "in romaji" do
+          let(:character) { :romaji }
+
+          it 'returns "Reiwa"' do
+            expect(beginning_of_period.era_name(character)).to eq("Reiwa")
+          end
+        end
+      end
+
       context "in the Heisei period" do
-        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
+        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
 
         context "in kanji" do
           let(:character) { :kanji }
 
           it 'returns "平成"' do
             expect(beginning_of_period.era_name(character)).to eq("平成")
+            expect(end_of_period.era_name(character)).to       eq("平成")
           end
         end
 
@@ -20,6 +42,7 @@ describe JapaneseCalendar::Era do
 
           it 'returns "Heisei"' do
             expect(beginning_of_period.era_name(character)).to eq("Heisei")
+            expect(end_of_period.era_name(character)).to       eq("Heisei")
           end
         end
       end
@@ -115,6 +138,22 @@ describe JapaneseCalendar::Era do
     end
 
     describe "#era_year" do
+      context "on the first day of the Reiwa period" do
+        let(:first_day_of_period) { subject.class.new(2019, 5, 1) }
+
+        it "returns 1" do
+          expect(first_day_of_period.era_year).to eq(1)
+        end
+      end
+
+      context "on the last day of the Heisei period" do
+        let(:last_day_of_period) { subject.class.new(2019, 4, 30) }
+
+        it "returns 31" do
+          expect(last_day_of_period.era_year).to eq(31)
+        end
+      end
+
       context "on the first day of the Heisei period" do
         let(:first_day_of_period) { subject.class.new(1989, 1, 8) }
 
@@ -183,13 +222,13 @@ describe JapaneseCalendar::Era do
     end
 
     describe "#strftime" do
-      let(:time) { subject.class.new(1989, 1, 8) }
+      let(:time) { subject.class.new(2019, 5, 1) }
 
       context "with %JN format" do
         let(:format) { "%JN" }
 
         it "returns the era name" do
-          expect(time.strftime(format)).to eq("平成")
+          expect(time.strftime(format)).to eq("令和")
         end
       end
 
@@ -197,7 +236,7 @@ describe JapaneseCalendar::Era do
         let(:format) { "%JR" }
 
         it "returns the era name in romaji" do
-          expect(time.strftime(format)).to eq("Heisei")
+          expect(time.strftime(format)).to eq("Reiwa")
         end
       end
 
@@ -205,7 +244,7 @@ describe JapaneseCalendar::Era do
         let(:format) { "%^JR" }
 
         it "returns the uppercased era name in romaji" do
-          expect(time.strftime(format)).to eq("HEISEI")
+          expect(time.strftime(format)).to eq("REIWA")
         end
       end
 
@@ -213,7 +252,7 @@ describe JapaneseCalendar::Era do
         let(:format) { "%Jr" }
 
         it "returns the abbreviated era name in romaji" do
-          expect(time.strftime(format)).to eq("H")
+          expect(time.strftime(format)).to eq("R")
         end
       end
 
@@ -245,7 +284,7 @@ describe JapaneseCalendar::Era do
         let(:format) { "%K" }
 
         it "returns the era name with a warning" do
-          expect(time.strftime(format)).to eq("平成")
+          expect(time.strftime(format)).to eq("令和")
           expect do
             time.strftime(format)
           end.to output(/%K is deprecated. Please use %JN instead./).to_stderr
@@ -256,7 +295,7 @@ describe JapaneseCalendar::Era do
         let(:format) { "%O" }
 
         it "returns the era name in romaji with a warning" do
-          expect(time.strftime(format)).to eq("Heisei")
+          expect(time.strftime(format)).to eq("Reiwa")
           expect do
             time.strftime(format)
           end.to output(/%O is deprecated. Please use %JR instead./).to_stderr
@@ -267,7 +306,7 @@ describe JapaneseCalendar::Era do
         let(:format) { "%^O" }
 
         it "returns the uppercased era name in romaji with a warning" do
-          expect(time.strftime(format)).to eq("HEISEI")
+          expect(time.strftime(format)).to eq("REIWA")
           expect do
             time.strftime(format)
           end.to output(/%\^O is deprecated. Please use %\^JR instead./).to_stderr
@@ -278,7 +317,7 @@ describe JapaneseCalendar::Era do
         let(:format) { "%o" }
 
         it "returns the abbreviated era name in romaji with a warning" do
-          expect(time.strftime(format)).to eq("H")
+          expect(time.strftime(format)).to eq("R")
           expect do
             time.strftime(format)
           end.to output(/%o is deprecated. Please use %Jr instead./).to_stderr

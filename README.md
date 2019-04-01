@@ -23,6 +23,7 @@ Or install it yourself as:
 To get the Japanese era name, use the `era_name` method:
 
 ```
+Time.new(2019,  5,  1).era_name # => "令和"
 Time.new(1989,  1,  8).era_name # => "平成"
 Time.new(1926, 12, 25).era_name # => "昭和"
 Time.new(1912,  7, 30).era_name # => "大正"
@@ -32,6 +33,7 @@ Time.new(1873,  1,  1).era_name # => "明治"
 If you want to get the Japanese era name in romaji, pass `:romaji`:
 
 ```
+Time.new(2019,  5,  1).era_name(:romaji) # => "Reiwa"
 Time.new(1989,  1,  8).era_name(:romaji) # => "Heisei"
 Time.new(1926, 12, 25).era_name(:romaji) # => "Showa"
 Time.new(1912,  7, 30).era_name(:romaji) # => "Taisho"
@@ -41,7 +43,8 @@ Time.new(1873,  1,  1).era_name(:romaji) # => "Meiji"
 You can convert to a Japanese year with the `era_year` method:
 
 ```
-Time.new(2016, 12, 11).era_year # => 28
+Time.new(2019,  5,  1).era_year # => 1
+Time.new(2019,  4, 30).era_year # => 31
 Time.new(1989,  1,  7).era_year # => 64
 Time.new(1926, 12, 24).era_year # => 15
 Time.new(1912,  7, 29).era_year # => 45
@@ -50,25 +53,25 @@ Time.new(1912,  7, 29).era_year # => 45
 To get a string representation of the Japanese calendar, use the `strftime` method:
 
 ```
-time = Time.new(1989, 1, 1)
+time = Time.new(2019, 5, 1)
 
 # Japanese era
-time.strftime("%JN")  # => "平成"
-time.strftime("%JR")  # => "Heisei"
-time.strftime("%^JR") # => "HEISEI"
-time.strftime("%Jr")  # => "H"
+time.strftime("%JN")  # => "令和"
+time.strftime("%JR")  # => "Reiwa"
+time.strftime("%^JR") # => "REIWA"
+time.strftime("%Jr")  # => "R"
 time.strftime("%Jy")  # => "01"
 time.strftime("%-Jy") # => "1"
 time.strftime("%_Jy") # => " 1"
 
 # Japanese weekday name
-time.strftime("%JA") # => "日曜日"
-time.strftime("%Ja") # => "日"
+time.strftime("%JA") # => "水曜日"
+time.strftime("%Ja") # => "水"
 
 # More examples
-time.strftime("%JN%-Jy年%-m月%-d日(%Ja)") # => "平成1年1月1日(日)"
-time.strftime("%Jr%Jy.%m.%d")            # => "H01.01.01"
-time.strftime("%B %-d, %-Y (%JR %-Jy)")  # => "January 1, 1989 (Heisei 1)"
+time.strftime("%JN%-Jy年%-m月%-d日(%Ja)") # => "令和1年5月1日(水)"
+time.strftime("%Jr%Jy.%m.%d")            # => "R01.05.01"
+time.strftime("%B %-d, %-Y (%JR %-Jy)")  # => "May 1, 2019 (Reiwa 1)"
 ```
 
 ## Development

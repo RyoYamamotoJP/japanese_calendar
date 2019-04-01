@@ -78,6 +78,7 @@ module JapaneseCalendar
       Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
 
       PERIODS = [
+        Period.new(Date.new(2019,  5,  1), "令和", "Reiwa").freeze,
         Period.new(Date.new(1989,  1,  8), "平成", "Heisei").freeze,
         Period.new(Date.new(1926, 12, 25), "昭和", "Showa" ).freeze,
         Period.new(Date.new(1912,  7, 30), "大正", "Taisho").freeze,
