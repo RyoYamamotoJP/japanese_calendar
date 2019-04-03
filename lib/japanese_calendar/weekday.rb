@@ -23,14 +23,8 @@ module JapaneseCalendar
     private
 
       def deprecated_japanese_calendar_weekday_strftime(string)
-        if string =~ /%Q/
-          deprecate('%Q', 'Please use %JA instead.')
-          string.gsub!(/%Q/, NAMES[wday])
-        end
-        if string =~ /%q/
-          deprecate('%q', 'Please use %Ja instead.')
-          string.gsub!(/%q/, NAMES[wday][0])
-        end
+        deprecate('%Q', 'Please use %JA instead.') if string.gsub!(/%Q/, NAMES[wday])
+        deprecate('%q', 'Please use %Ja instead.') if string.gsub!(/%q/, NAMES[wday][0])
       end
 
       def deprecate(directive, message)
