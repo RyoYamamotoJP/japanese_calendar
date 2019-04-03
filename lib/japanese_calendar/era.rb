@@ -8,6 +8,10 @@ module JapaneseCalendar
 
     # Returns the Japanese era name (nengo) since 1 January 1873 (Meiji 6).
     #
+    #   reiwa = Time.new(2019, 5, 1)   # => 2019-05-01 00:00:00 +0900
+    #   reiwa.era_name                 # => "令和"
+    #   reiwa.era_name(:romaji)        # => "Reiwa"
+    #
     #   heisei = Time.new(1989, 1, 8)  # => 1989-01-08 00:00:00 +0900
     #   heisei.era_name                # => "平成"
     #   heisei.era_name(:romaji)       # => "Heisei"
@@ -37,7 +41,8 @@ module JapaneseCalendar
 
     # Returns the Japanese year since 1 January 1873 (Meiji 6).
     #
-    #   Time.new(2016, 12, 11).era_year # => 28
+    #   Time.new(2019,  5,  1).era_year # => 1
+    #   Time.new(2019,  4, 30).era_year # => 31
     #   Time.new(1989,  1,  7).era_year # => 64
     #   Time.new(1926, 12, 24).era_year # => 15
     #   Time.new(1912,  7, 29).era_year # => 45
