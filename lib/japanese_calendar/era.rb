@@ -71,9 +71,7 @@ module JapaneseCalendar
     #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
     def strftime(format)
       warn_if_deprecated(format)
-
-      pattern = Regexp.union(era_conversion.keys)
-      string = format.gsub(pattern, era_conversion)
+      string = format.gsub(era_pattern, era_conversion)
       super(string)
     end
 
@@ -131,6 +129,10 @@ module JapaneseCalendar
           '%-J' => '%d' % era_year,
           '%_J' => '%2d' % era_year
         }
+      end
+
+      def era_pattern
+        @era_pattern ||= Regexp.union(era_conversion.keys)
       end
   end
 end
