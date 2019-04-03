@@ -16,8 +16,8 @@ module JapaneseCalendar
       deprecate('%Q', 'Please use %JA instead.') if format =~ /%Q/
       deprecate('%q', 'Please use %Ja instead.') if format =~ /%q/
 
-      pattern = Regexp.union(conversion.keys)
-      string = format.gsub(pattern, conversion)
+      pattern = Regexp.union(weekday_conversion.keys)
+      string = format.gsub(pattern, weekday_conversion)
       super(string)
     end
 
@@ -31,8 +31,8 @@ module JapaneseCalendar
         @weekday_abbreviation ||= weekday_name[0]
       end
 
-      def conversion
-        @conversion ||= {
+      def weekday_conversion
+        @weekday_conversion ||= {
           '%JA' => weekday_name,
           '%Ja' => weekday_abbreviation,
           '%Q' => weekday_name,
