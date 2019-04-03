@@ -14,11 +14,14 @@ module JapaneseCalendar
     #
     #   date_of_birth.strftime("%-Y年%-m月%-d日(%q)") # => "1978年7月19日(水)"
     def strftime(format)
+      deprecate("%Q", "Please use %JA instead.") if format =~ /%Q/
+      deprecate("%q", "Please use %Ja instead.") if format =~ /%q/
+
       string = format.dup
       string.gsub!(/%JA/, NAMES[wday])
       string.gsub!(/%Ja/, ABBREVIATIONS[wday])
-      deprecate('%Q', 'Please use %JA instead.') if string.gsub!(/%Q/, NAMES[wday])
-      deprecate('%q', 'Please use %Ja instead.') if string.gsub!(/%q/, ABBREVIATIONS[wday])
+      string.gsub!(/%Q/, NAMES[wday])
+      string.gsub!(/%q/, ABBREVIATIONS[wday])
       super(string)
     end
 
