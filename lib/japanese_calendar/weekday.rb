@@ -3,6 +3,7 @@
 module JapaneseCalendar
   module Weekday
     NAMES = %w(日曜日 月曜日 火曜日 水曜日 木曜日 金曜日 土曜日).freeze
+    ABBREVIATIONS = NAMES.map { |name| name[0] }.freeze
 
     # Formats time according to the directives in the given format string.
     #
@@ -15,7 +16,7 @@ module JapaneseCalendar
     def strftime(format)
       string = format.dup
       string.gsub!(/%JA/, NAMES[wday])
-      string.gsub!(/%Ja/, NAMES[wday][0])
+      string.gsub!(/%Ja/, ABBREVIATIONS[wday])
       deprecated_japanese_calendar_weekday_strftime(string)
       super(string)
     end
@@ -24,7 +25,7 @@ module JapaneseCalendar
 
       def deprecated_japanese_calendar_weekday_strftime(string)
         deprecate('%Q', 'Please use %JA instead.') if string.gsub!(/%Q/, NAMES[wday])
-        deprecate('%q', 'Please use %Ja instead.') if string.gsub!(/%q/, NAMES[wday][0])
+        deprecate('%q', 'Please use %Ja instead.') if string.gsub!(/%q/, ABBREVIATIONS[wday])
       end
 
       def deprecate(directive, message)
