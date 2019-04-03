@@ -66,14 +66,18 @@ module JapaneseCalendar
     #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
     def strftime(format)
       warn_if_deprecated(format)
-      string = format.dup
-      string.gsub!(/%JN/,   era_name)
-      string.gsub!(/%JR/,   era_name(:romaji))
-      string.gsub!(/%\^JR/, era_name(:romaji).upcase)
-      string.gsub!(/%Jr/,   era_name(:romaji)[0])
-      string.gsub!(/%Jy/,   '%02d' % era_year)
-      string.gsub!(/%-Jy/,  '%d'   % era_year)
-      string.gsub!(/%_Jy/,  '%2d'  % era_year)
+
+      hash = {
+        '%JN' => era_name,
+        '%JR' => era_name(:romaji),
+        '%^JR' => era_name(:romaji).upcase,
+        '%Jr' => era_name(:romaji)[0],
+        '%Jy' => '%02d' % era_year,
+        '%-Jy' => '%d' % era_year,
+        '%_Jy' => '%2d' % era_year
+      }
+      pattern = Regexp.union(hash.keys)
+      string = format.gsub(pattern, hash)
       deprecated_japanese_calendar_era_name_strftime(string)
       deprecated_japanese_calendar_era_year_strftime(string)
       super(string)
