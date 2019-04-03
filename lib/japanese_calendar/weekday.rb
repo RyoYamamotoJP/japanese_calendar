@@ -17,11 +17,14 @@ module JapaneseCalendar
       deprecate("%Q", "Please use %JA instead.") if format =~ /%Q/
       deprecate("%q", "Please use %Ja instead.") if format =~ /%q/
 
-      string = format.dup
-      string.gsub!(/%JA/, NAMES[wday])
-      string.gsub!(/%Ja/, ABBREVIATIONS[wday])
-      string.gsub!(/%Q/, NAMES[wday])
-      string.gsub!(/%q/, ABBREVIATIONS[wday])
+      hash = {
+        "%Q" => NAMES[wday],
+        "%q" => ABBREVIATIONS[wday],
+        "%JA" => NAMES[wday],
+        "%Ja" => ABBREVIATIONS[wday]
+      }
+      pattern = Regexp.union(hash.keys)
+      string = format.gsub(pattern, hash)
       super(string)
     end
 
