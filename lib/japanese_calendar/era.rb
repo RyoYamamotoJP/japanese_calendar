@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require 'japanese_calendar/deprecator'
+
 module JapaneseCalendar
   module Era
+    include Deprecator
+
     # Returns the Japanese era name (nengo) since 1 January 1873 (Meiji 6).
     #
     #   heisei = Time.new(1989, 1, 8)  # => 1989-01-08 00:00:00 +0900
@@ -107,10 +111,6 @@ module JapaneseCalendar
         deprecate('%J', 'Please use %Jy instead.') if string.gsub!(/%J/, '%02d' % era_year)
         deprecate('%-J', 'Please use %-Jy instead.') if string.gsub!(/%-J/, '%d' % era_year)
         deprecate('%_J', 'Please use %_Jy instead.') if string.gsub!(/%_J/, '%2d' % era_year)
-      end
-
-      def deprecate(directive, message)
-        warn "#{directive} is deprecated. #{message}"
       end
   end
 end
