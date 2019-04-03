@@ -65,6 +65,7 @@ module JapaneseCalendar
     #
     #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
     def strftime(format)
+      warn_if_deprecated(format)
       string = format.dup
       string.gsub!(/%JN/,   era_name)
       string.gsub!(/%JR/,   era_name(:romaji))
@@ -100,17 +101,32 @@ module JapaneseCalendar
         end
       end
 
+      def warn_if_deprecated(format)
+        messages = {
+          '%K' => 'Please use %JN instead.',
+          '%O' => 'Please use %JR instead.',
+          '%^O' => 'Please use %^JR instead.',
+          '%o' => 'Please use %Jr instead.',
+          '%J' => 'Please use %Jy instead.',
+          '%-J' => 'Please use %-Jy instead.',
+          '%_J' => 'Please use %_Jy instead.'
+        }
+        pattern = Regexp.union(messages.keys)
+        directives = format.scan(pattern).uniq
+        directives.each { |key| deprecate(key, messages[key]) }
+      end
+
       def deprecated_japanese_calendar_era_name_strftime(string)
-        deprecate('%K', 'Please use %JN instead.') if string.gsub!(/%K/, era_name)
-        deprecate('%O', 'Please use %JR instead.') if string.gsub!(/%O/, era_name(:romaji))
-        deprecate('%^O', 'Please use %^JR instead.') if string.gsub!(/%\^O/, era_name(:romaji).upcase)
-        deprecate('%o', 'Please use %Jr instead.') if string.gsub!(/%o/, era_name(:romaji)[0])
+        string.gsub!(/%K/, era_name)
+        string.gsub!(/%O/, era_name(:romaji))
+        string.gsub!(/%\^O/, era_name(:romaji).upcase)
+        string.gsub!(/%o/, era_name(:romaji)[0])
       end
 
       def deprecated_japanese_calendar_era_year_strftime(string)
-        deprecate('%J', 'Please use %Jy instead.') if string.gsub!(/%J/, '%02d' % era_year)
-        deprecate('%-J', 'Please use %-Jy instead.') if string.gsub!(/%-J/, '%d' % era_year)
-        deprecate('%_J', 'Please use %_Jy instead.') if string.gsub!(/%_J/, '%2d' % era_year)
+        string.gsub!(/%J/, '%02d' % era_year)
+        string.gsub!(/%-J/, '%d' % era_year)
+        string.gsub!(/%_J/, '%2d' % era_year)
       end
   end
 end
