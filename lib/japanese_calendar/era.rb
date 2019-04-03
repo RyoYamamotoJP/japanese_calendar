@@ -71,25 +71,7 @@ module JapaneseCalendar
     #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
     def strftime(format)
       warn_if_deprecated(format)
-
-      hash = {
-        '%JN' => era_name,
-        '%JR' => era_name(:romaji),
-        '%^JR' => era_name(:romaji).upcase,
-        '%Jr' => era_name(:romaji)[0],
-        '%Jy' => '%02d' % era_year,
-        '%-Jy' => '%d' % era_year,
-        '%_Jy' => '%2d' % era_year,
-        '%K' => era_name,
-        '%O' => era_name(:romaji),
-        '%^O' => era_name(:romaji).upcase,
-        '%o' => era_name(:romaji)[0],
-        '%J' => '%02d' % era_year,
-        '%-J' => '%d' % era_year,
-        '%_J' => '%2d' % era_year
-      }
-      pattern = Regexp.union(hash.keys)
-      string = format.gsub(pattern, hash)
+      string = format.gsub(era_pattern, era_conversion)
       super(string)
     end
 
@@ -128,6 +110,29 @@ module JapaneseCalendar
         pattern = Regexp.union(messages.keys)
         directives = format.scan(pattern).uniq
         directives.each { |key| deprecate(key, messages[key]) }
+      end
+
+      def era_conversion
+        @era_conversion ||= {
+          '%JN' => era_name,
+          '%JR' => era_name(:romaji),
+          '%^JR' => era_name(:romaji).upcase,
+          '%Jr' => era_name(:romaji)[0],
+          '%Jy' => '%02d' % era_year,
+          '%-Jy' => '%d' % era_year,
+          '%_Jy' => '%2d' % era_year,
+          '%K' => era_name,
+          '%O' => era_name(:romaji),
+          '%^O' => era_name(:romaji).upcase,
+          '%o' => era_name(:romaji)[0],
+          '%J' => '%02d' % era_year,
+          '%-J' => '%d' % era_year,
+          '%_J' => '%2d' % era_year
+        }
+      end
+
+      def era_pattern
+        @era_pattern ||= Regexp.union(era_conversion.keys)
       end
   end
 end

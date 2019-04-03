@@ -11,7 +11,7 @@ module JapaneseCalendar
     #   date_of_birth.strftime("%JA")  # => "水曜日"
     #   date_of_birth.strftime("%Ja")  # => "水"
     #
-    #   date_of_birth.strftime("%-Y年%-m月%-d日(%q)") # => "1978年7月19日(水)"
+    #   date_of_birth.strftime("%-Y年%-m月%-d日(%Ja)") # => "1978年7月19日(水)"
     def strftime(format)
       deprecate('%Q', 'Please use %JA instead.') if format =~ /%Q/
       deprecate('%q', 'Please use %Ja instead.') if format =~ /%q/
