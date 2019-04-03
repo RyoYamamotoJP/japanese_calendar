@@ -14,14 +14,14 @@ module JapaneseCalendar
     #
     #   date_of_birth.strftime("%-Y年%-m月%-d日(%q)") # => "1978年7月19日(水)"
     def strftime(format)
-      deprecate("%Q", "Please use %JA instead.") if format =~ /%Q/
-      deprecate("%q", "Please use %Ja instead.") if format =~ /%q/
+      deprecate('%Q', 'Please use %JA instead.') if format =~ /%Q/
+      deprecate('%q', 'Please use %Ja instead.') if format =~ /%q/
 
       hash = {
-        "%Q" => NAMES[wday],
-        "%q" => ABBREVIATIONS[wday],
-        "%JA" => NAMES[wday],
-        "%Ja" => ABBREVIATIONS[wday]
+        '%Q' => NAMES[wday],
+        '%q' => ABBREVIATIONS[wday],
+        '%JA' => NAMES[wday],
+        '%Ja' => ABBREVIATIONS[wday]
       }
       pattern = Regexp.union(hash.keys)
       string = format.gsub(pattern, hash)

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "date"
-require "japanese_calendar/era"
-require "japanese_calendar/weekday"
+require 'date'
+require 'japanese_calendar/era'
+require 'japanese_calendar/weekday'
 
 class DateTime
   prepend JapaneseCalendar::Era
