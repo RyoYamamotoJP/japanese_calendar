@@ -17,16 +17,12 @@ module JapaneseCalendar
       string = format.dup
       string.gsub!(/%JA/, NAMES[wday])
       string.gsub!(/%Ja/, ABBREVIATIONS[wday])
-      deprecated_japanese_calendar_weekday_strftime(string)
+      deprecate('%Q', 'Please use %JA instead.') if string.gsub!(/%Q/, NAMES[wday])
+      deprecate('%q', 'Please use %Ja instead.') if string.gsub!(/%q/, ABBREVIATIONS[wday])
       super(string)
     end
 
     private
-
-      def deprecated_japanese_calendar_weekday_strftime(string)
-        deprecate('%Q', 'Please use %JA instead.') if string.gsub!(/%Q/, NAMES[wday])
-        deprecate('%q', 'Please use %Ja instead.') if string.gsub!(/%q/, ABBREVIATIONS[wday])
-      end
 
       def deprecate(directive, message)
         warn "#{directive} is deprecated. #{message}"
