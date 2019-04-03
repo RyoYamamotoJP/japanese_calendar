@@ -4,9 +4,6 @@ module JapaneseCalendar
   module Weekday
     include Deprecator
 
-    NAMES = %w(日曜日 月曜日 火曜日 水曜日 木曜日 金曜日 土曜日).freeze
-    ABBREVIATIONS = NAMES.map { |name| name[0] }.freeze
-
     # Formats time according to the directives in the given format string.
     #
     #   date_of_birth = Time.new(1978, 7, 19)
@@ -26,12 +23,20 @@ module JapaneseCalendar
 
     private
 
+      def weekday_name
+        @weekday_name ||= %w(日曜日 月曜日 火曜日 水曜日 木曜日 金曜日 土曜日)[wday]
+      end
+
+      def weekday_abbreviation
+        @weekday_abbreviation ||= weekday_name[0]
+      end
+
       def conversion
         @conversion ||= {
-          '%Q' => NAMES[wday],
-          '%q' => ABBREVIATIONS[wday],
-          '%JA' => NAMES[wday],
-          '%Ja' => ABBREVIATIONS[wday]
+          '%JA' => weekday_name,
+          '%Ja' => weekday_abbreviation,
+          '%Q' => weekday_name,
+          '%q' => weekday_abbreviation
         }
       end
   end
