@@ -97,37 +97,16 @@ module JapaneseCalendar
       end
 
       def deprecated_japanese_calendar_era_name_strftime(string)
-        if string =~ /%K/
-          deprecate('%K', 'Please use %JN instead.')
-          string.gsub!(/%K/, era_name)
-        end
-        if string =~ /%O/
-          deprecate('%O', 'Please use %JR instead.')
-          string.gsub!(/%O/, era_name(:romaji))
-        end
-        if string =~ /%\^O/
-          deprecate('%^O', 'Please use %^JR instead.')
-          string.gsub!(/%\^O/, era_name(:romaji).upcase)
-        end
-        if string =~ /%o/
-          deprecate('%o', 'Please use %Jr instead.')
-          string.gsub!(/%o/, era_name(:romaji)[0])
-        end
+        deprecate('%K', 'Please use %JN instead.') if string.gsub!(/%K/, era_name)
+        deprecate('%O', 'Please use %JR instead.') if string.gsub!(/%O/, era_name(:romaji))
+        deprecate('%^O', 'Please use %^JR instead.') if string.gsub!(/%\^O/, era_name(:romaji).upcase)
+        deprecate('%o', 'Please use %Jr instead.') if string.gsub!(/%o/, era_name(:romaji)[0])
       end
 
       def deprecated_japanese_calendar_era_year_strftime(string)
-        if string =~ /%J/
-          deprecate('%J', 'Please use %Jy instead.')
-          string.gsub!(/%J/, '%02d' % era_year)
-        end
-        if string =~ /%-J/
-          deprecate('%-J', 'Please use %-Jy instead.')
-          string.gsub!(/%-J/, '%d' % era_year)
-        end
-        if string =~ /%_J/
-          deprecate('%_J', 'Please use %_Jy instead.')
-          string.gsub!(/%_J/, '%2d' % era_year)
-        end
+        deprecate('%J', 'Please use %Jy instead.') if string.gsub!(/%J/, '%02d' % era_year)
+        deprecate('%-J', 'Please use %-Jy instead.') if string.gsub!(/%-J/, '%d' % era_year)
+        deprecate('%_J', 'Please use %_Jy instead.') if string.gsub!(/%_J/, '%2d' % era_year)
       end
 
       def deprecate(directive, message)
