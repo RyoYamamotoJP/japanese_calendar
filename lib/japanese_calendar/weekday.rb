@@ -30,7 +30,9 @@ module JapaneseCalendar
       def collect_weekday_deprecations(format)
         deprecation_pattern = Regexp.union(DEPRECATIONS.keys)
         deprecated_directives = format.scan(deprecation_pattern).uniq
-        DEPRECATIONS.slice(*deprecated_directives)
+        DEPRECATIONS.select do |directive, _|
+          deprecated_directives.include?(directive)
+        end
       end
 
       def weekday_name
