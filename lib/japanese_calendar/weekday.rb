@@ -22,16 +22,16 @@ module JapaneseCalendar
 
     private
 
-      DEPRECATION_MESSAGES = {
+      DEPRECATIONS = {
         '%Q' => 'Please use %JA instead.',
         '%q' => 'Please use %Ja instead.'
       }.freeze
 
-      DEPRECATION_PATTERN = Regexp.union(DEPRECATION_MESSAGES.keys)
+      DEPRECATION_PATTERN = Regexp.union(DEPRECATIONS.keys)
 
       def collect_weekday_deprecations(format)
         deprecated_directives = format.scan(DEPRECATION_PATTERN).uniq
-        DEPRECATION_MESSAGES.slice(*deprecated_directives)
+        DEPRECATIONS.slice(*deprecated_directives)
       end
 
       def weekday_name
