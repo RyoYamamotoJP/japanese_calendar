@@ -14,7 +14,7 @@ module JapaneseCalendar
     #   date_of_birth.strftime("%-Y年%-m月%-d日(%Ja)") # => "1978年7月19日(水)"
     def strftime(format)
       deprecations = collect_weekday_deprecations(format)
-      deprecations.each { |directive, message| deprecate(directive, message) }
+      deprecations.each { |deprecation| deprecate(*deprecation) }
 
       string = format.gsub(weekday_pattern, weekday_conversion)
       super(string)
