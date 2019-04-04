@@ -1,15 +1,10 @@
 # frozen_string_literal: true
 
+require 'japanese_calendar/weekday/deprecator'
+
 module JapaneseCalendar
   module Weekday
-    include Deprecator
-
-    DEPRECATIONS = {
-      '%Q' => 'Please use %JA instead.',
-      '%q' => 'Please use %Ja instead.'
-    }.freeze
-
-    private_constant :DEPRECATIONS
+    prepend Weekday::Deprecator
 
     # Formats time according to the directives in the given format string.
     #
@@ -20,22 +15,11 @@ module JapaneseCalendar
     #
     #   date_of_birth.strftime("%-Y年%-m月%-d日(%Ja)") # => "1978年7月19日(水)"
     def strftime(format)
-      deprecations = collect_weekday_deprecations(format)
-      deprecations.each { |deprecation| deprecate(*deprecation) }
-
       string = format.gsub(weekday_pattern, weekday_conversion)
       super(string)
     end
 
     private
-
-    def collect_weekday_deprecations(format)
-      deprecation_pattern = Regexp.union(DEPRECATIONS.keys)
-      deprecated_directives = format.scan(deprecation_pattern).uniq
-      DEPRECATIONS.select do |directive, _|
-        deprecated_directives.include?(directive)
-      end
-    end
 
     def weekday_name
       @weekday_name ||= %w[日曜日 月曜日 火曜日 水曜日 木曜日 金曜日 土曜日][wday]

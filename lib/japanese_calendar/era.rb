@@ -1,24 +1,14 @@
 # frozen_string_literal: true
 
-require 'japanese_calendar/deprecator'
+require 'japanese_calendar/era/deprecator'
 
 module JapaneseCalendar
   module Era
-    include Deprecator
+    prepend Era::Deprecator
 
     Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
 
     MEIJI_6 = Date.new(1873, 1, 1)
-
-    DEPRECATIONS = {
-      '%K' => 'Please use %JN instead.',
-      '%O' => 'Please use %JR instead.',
-      '%^O' => 'Please use %^JR instead.',
-      '%o' => 'Please use %Jr instead.',
-      '%J' => 'Please use %Jy instead.',
-      '%-J' => 'Please use %-Jy instead.',
-      '%_J' => 'Please use %_Jy instead.'
-    }.freeze
 
     PERIODS = [
       Period.new(Date.new(2019,  5,  1), '令和', 'Reiwa').freeze,
@@ -28,7 +18,7 @@ module JapaneseCalendar
       Period.new(Date.new(1868,  1, 25), '明治', 'Meiji').freeze
     ].freeze
 
-    private_constant :Period, :MEIJI_6, :DEPRECATIONS, :PERIODS
+    private_constant :Period, :MEIJI_6, :PERIODS
 
     # Returns the Japanese era name (nengo) since 1 January 1873 (Meiji 6).
     #
@@ -94,22 +84,11 @@ module JapaneseCalendar
     #
     #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
     def strftime(format)
-      deprecations = collect_era_deprecations(format)
-      deprecations.each { |deprecation| deprecate(*deprecation) }
-
       string = format.gsub(era_pattern, era_conversion)
       super(string)
     end
 
     private
-
-    def collect_era_deprecations(format)
-      deprecation_pattern = Regexp.union(DEPRECATIONS.keys)
-      deprecated_directives = format.scan(deprecation_pattern).uniq
-      DEPRECATIONS.select do |directive, _|
-        deprecated_directives.include?(directive)
-      end
-    end
 
     def current_era
       error_proc = proc { raise "#{self.class.name.downcase} out of range" }
