@@ -13,33 +13,47 @@ module JapaneseCalendar
     #
     #   date_of_birth.strftime("%-Y年%-m月%-d日(%Ja)") # => "1978年7月19日(水)"
     def strftime(format)
-      deprecate('%Q', 'Please use %JA instead.') if format =~ /%Q/
-      deprecate('%q', 'Please use %Ja instead.') if format =~ /%q/
+      deprecations = collect_weekday_deprecations(format)
+      deprecations.each { |deprecation| deprecate(*deprecation) }
+
       string = format.gsub(weekday_pattern, weekday_conversion)
       super(string)
     end
 
     private
 
-      def weekday_name
-        @weekday_name ||= %w(日曜日 月曜日 火曜日 水曜日 木曜日 金曜日 土曜日)[wday]
-      end
+    DEPRECATIONS = {
+      '%Q' => 'Please use %JA instead.',
+      '%q' => 'Please use %Ja instead.'
+    }.freeze
 
-      def weekday_abbreviation
-        @weekday_abbreviation ||= weekday_name[0]
+    def collect_weekday_deprecations(format)
+      deprecation_pattern = Regexp.union(DEPRECATIONS.keys)
+      deprecated_directives = format.scan(deprecation_pattern).uniq
+      DEPRECATIONS.select do |directive, _|
+        deprecated_directives.include?(directive)
       end
+    end
 
-      def weekday_conversion
-        @weekday_conversion ||= {
-          '%JA' => weekday_name,
-          '%Ja' => weekday_abbreviation,
-          '%Q' => weekday_name,
-          '%q' => weekday_abbreviation
-        }
-      end
+    def weekday_name
+      @weekday_name ||= %w[日曜日 月曜日 火曜日 水曜日 木曜日 金曜日 土曜日][wday]
+    end
 
-      def weekday_pattern
-        @weekday_pattern ||= Regexp.union(weekday_conversion.keys)
-      end
+    def weekday_abbreviation
+      weekday_name[0]
+    end
+
+    def weekday_conversion
+      @weekday_conversion ||= {
+        '%JA' => weekday_name,
+        '%Ja' => weekday_abbreviation,
+        '%Q' => weekday_name,
+        '%q' => weekday_abbreviation
+      }
+    end
+
+    def weekday_pattern
+      Regexp.union(weekday_conversion.keys)
+    end
   end
 end

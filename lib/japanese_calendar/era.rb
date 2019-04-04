@@ -32,7 +32,7 @@ module JapaneseCalendar
     #
     #   Time.new(1872, 12, 31).era_name # => RuntimeError
     def era_name(character = :kanji)
-      unless %i(kanji romaji).include?(character)
+      unless %i[kanji romaji].include?(character)
         raise ArgumentError, 'invalid character'
       end
 
@@ -70,69 +70,102 @@ module JapaneseCalendar
     #
     #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
     def strftime(format)
-      warn_if_deprecated(format)
+      deprecations = collect_era_deprecations(format)
+      deprecations.each { |deprecation| deprecate(*deprecation) }
+
       string = format.gsub(era_pattern, era_conversion)
       super(string)
     end
 
     private
 
-      Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
+    Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
 
-      PERIODS = [
-        Period.new(Date.new(2019,  5,  1), '令和', 'Reiwa' ).freeze,
-        Period.new(Date.new(1989,  1,  8), '平成', 'Heisei').freeze,
-        Period.new(Date.new(1926, 12, 25), '昭和', 'Showa' ).freeze,
-        Period.new(Date.new(1912,  7, 30), '大正', 'Taisho').freeze,
-        Period.new(Date.new(1868,  1, 25), '明治', 'Meiji' ).freeze
-      ].freeze
+    PERIODS = [
+      Period.new(Date.new(2019,  5,  1), '令和', 'Reiwa').freeze,
+      Period.new(Date.new(1989,  1,  8), '平成', 'Heisei').freeze,
+      Period.new(Date.new(1926, 12, 25), '昭和', 'Showa').freeze,
+      Period.new(Date.new(1912,  7, 30), '大正', 'Taisho').freeze,
+      Period.new(Date.new(1868,  1, 25), '明治', 'Meiji').freeze
+    ].freeze
 
-      MEIJI_6 = Date.new(1873, 1, 1)
+    MEIJI_6 = Date.new(1873, 1, 1)
 
-      def current_era
-        error_proc = proc { raise "#{self.class.name.downcase} out of range" }
-        error_proc.call if self.to_date < MEIJI_6
-        PERIODS.find(error_proc) do |period|
-          period.beginning_of_period <= self.to_date
-        end
+    DEPRECATIONS = {
+      '%K' => 'Please use %JN instead.',
+      '%O' => 'Please use %JR instead.',
+      '%^O' => 'Please use %^JR instead.',
+      '%o' => 'Please use %Jr instead.',
+      '%J' => 'Please use %Jy instead.',
+      '%-J' => 'Please use %-Jy instead.',
+      '%_J' => 'Please use %_Jy instead.'
+    }.freeze
+
+    def collect_era_deprecations(format)
+      deprecation_pattern = Regexp.union(DEPRECATIONS.keys)
+      deprecated_directives = format.scan(deprecation_pattern).uniq
+      DEPRECATIONS.select do |directive, _|
+        deprecated_directives.include?(directive)
       end
+    end
 
-      def warn_if_deprecated(format)
-        messages = {
-          '%K' => 'Please use %JN instead.',
-          '%O' => 'Please use %JR instead.',
-          '%^O' => 'Please use %^JR instead.',
-          '%o' => 'Please use %Jr instead.',
-          '%J' => 'Please use %Jy instead.',
-          '%-J' => 'Please use %-Jy instead.',
-          '%_J' => 'Please use %_Jy instead.'
-        }
-        pattern = Regexp.union(messages.keys)
-        directives = format.scan(pattern).uniq
-        directives.each { |key| deprecate(key, messages[key]) }
+    def current_era
+      error_proc = proc { raise "#{self.class.name.downcase} out of range" }
+      error_proc.call if self.to_date < MEIJI_6
+      PERIODS.find(error_proc) do |period|
+        period.beginning_of_period <= self.to_date
       end
+    end
 
-      def era_conversion
-        @era_conversion ||= {
-          '%JN' => era_name,
-          '%JR' => era_name(:romaji),
-          '%^JR' => era_name(:romaji).upcase,
-          '%Jr' => era_name(:romaji)[0],
-          '%Jy' => '%02d' % era_year,
-          '%-Jy' => '%d' % era_year,
-          '%_Jy' => '%2d' % era_year,
-          '%K' => era_name,
-          '%O' => era_name(:romaji),
-          '%^O' => era_name(:romaji).upcase,
-          '%o' => era_name(:romaji)[0],
-          '%J' => '%02d' % era_year,
-          '%-J' => '%d' % era_year,
-          '%_J' => '%2d' % era_year
-        }
-      end
+    def era_kanji_name
+      era_name(:kanji)
+    end
 
-      def era_pattern
-        @era_pattern ||= Regexp.union(era_conversion.keys)
-      end
+    def era_romaji_name
+      era_name(:romaji)
+    end
+
+    def era_romaji_upcase_name
+      era_romaji_name.upcase
+    end
+
+    def era_romaji_abbreviation
+      era_romaji_name[0]
+    end
+
+    def era_year_string
+      '%-d' % era_year
+    end
+
+    def era_year_zero_padded_string
+      '%02d' % era_year
+    end
+
+    def era_year_blank_padded_string
+      '%2d' % era_year
+    end
+
+    def era_conversion
+      @era_conversion ||= {
+        '%JN' => era_kanji_name,
+        '%JR' => era_romaji_name,
+        '%^JR' => era_romaji_upcase_name,
+        '%Jr' => era_romaji_abbreviation,
+        '%Jy' => era_year_zero_padded_string,
+        '%-Jy' => era_year_string,
+        '%_Jy' => era_year_blank_padded_string,
+        '%K' => era_kanji_name,
+        '%O' => era_romaji_name,
+        '%^O' => era_romaji_upcase_name,
+        '%o' => era_romaji_abbreviation,
+        '%J' => era_year_zero_padded_string,
+        '%-J' => era_year_string,
+        '%_J' => era_year_blank_padded_string
+      }
+    end
+
+    def era_pattern
+      Regexp.union(era_conversion.keys)
+    end
   end
 end
