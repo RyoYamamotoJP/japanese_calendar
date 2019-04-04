@@ -117,22 +117,50 @@ module JapaneseCalendar
         end
       end
 
+      def era_kanji_name
+        era_name(:kanji)
+      end
+
+      def era_romaji_name
+        era_name(:romaji)
+      end
+
+      def era_romaji_upcase_name
+        era_romaji_name.upcase
+      end
+
+      def era_romaji_abbreviation
+        era_romaji_name[0]
+      end
+
+      def era_year_string
+        '%-d' % era_year
+      end
+
+      def era_year_zero_padded_string
+        '%02d' % era_year
+      end
+
+      def era_year_blank_padded_string
+        '%2d' % era_year
+      end
+
       def era_conversion
         @era_conversion ||= {
-          '%JN' => era_name,
-          '%JR' => era_name(:romaji),
-          '%^JR' => era_name(:romaji).upcase,
-          '%Jr' => era_name(:romaji)[0],
-          '%Jy' => '%02d' % era_year,
-          '%-Jy' => '%d' % era_year,
-          '%_Jy' => '%2d' % era_year,
-          '%K' => era_name,
-          '%O' => era_name(:romaji),
-          '%^O' => era_name(:romaji).upcase,
-          '%o' => era_name(:romaji)[0],
-          '%J' => '%02d' % era_year,
-          '%-J' => '%d' % era_year,
-          '%_J' => '%2d' % era_year
+          '%JN' => era_kanji_name,
+          '%JR' => era_romaji_name,
+          '%^JR' => era_romaji_upcase_name,
+          '%Jr' => era_romaji_abbreviation,
+          '%Jy' => era_year_zero_padded_string,
+          '%-Jy' => era_year_string,
+          '%_Jy' => era_year_blank_padded_string,
+          '%K' => era_kanji_name,
+          '%O' => era_romaji_name,
+          '%^O' => era_romaji_upcase_name,
+          '%o' => era_romaji_abbreviation,
+          '%J' => era_year_zero_padded_string,
+          '%-J' => era_year_string,
+          '%_J' => era_year_blank_padded_string
         }
       end
 
