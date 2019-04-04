@@ -70,7 +70,9 @@ module JapaneseCalendar
     #
     #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
     def strftime(format)
-      warn_if_deprecated(format)
+      deprecations = collect_era_deprecations(format)
+      deprecations.each { |deprecation| deprecate(*deprecation) }
+
       string = format.gsub(era_pattern, era_conversion)
       super(string)
     end
@@ -111,11 +113,6 @@ module JapaneseCalendar
         PERIODS.find(error_proc) do |period|
           period.beginning_of_period <= self.to_date
         end
-      end
-
-      def warn_if_deprecated(format)
-        deprecations = collect_era_deprecations(format)
-        deprecations.each { |deprecation| deprecate(*deprecation) }
       end
 
       def era_conversion
