@@ -127,7 +127,7 @@ module JapaneseCalendar
     end
 
     def era_conversion
-      @era_conversion ||= {
+      {
         '%JN' => era_kanji_name,
         '%JR' => era_romaji_name,
         '%^JR' => era_romaji_upcase_name,

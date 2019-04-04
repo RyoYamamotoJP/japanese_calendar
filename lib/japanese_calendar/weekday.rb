@@ -22,7 +22,7 @@ module JapaneseCalendar
     private
 
     def weekday_name
-      @weekday_name ||= %w[日曜日 月曜日 火曜日 水曜日 木曜日 金曜日 土曜日][wday]
+      %w[日曜日 月曜日 火曜日 水曜日 木曜日 金曜日 土曜日][wday]
     end
 
     def weekday_abbreviation
@@ -30,7 +30,7 @@ module JapaneseCalendar
     end
 
     def weekday_conversion
-      @weekday_conversion ||= {
+      {
         '%JA' => weekday_name,
         '%Ja' => weekday_abbreviation,
         '%Q' => weekday_name,
