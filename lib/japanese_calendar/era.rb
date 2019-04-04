@@ -99,6 +99,12 @@ module JapaneseCalendar
         '%_J' => 'Please use %_Jy instead.'
       }.freeze
 
+      def collect_era_deprecations(format)
+        deprecation_pattern = Regexp.union(DEPRECATIONS.keys)
+        deprecated_directives = format.scan(deprecation_pattern).uniq
+        DEPRECATIONS.slice(*deprecated_directives)
+      end
+
       def current_era
         error_proc = proc { raise "#{self.class.name.downcase} out of range" }
         error_proc.call if self.to_date < MEIJI_6
@@ -108,9 +114,8 @@ module JapaneseCalendar
       end
 
       def warn_if_deprecated(format)
-        pattern = Regexp.union(DEPRECATIONS.keys)
-        directives = format.scan(pattern).uniq
-        directives.each { |key| deprecate(key, DEPRECATIONS[key]) }
+        deprecations = collect_era_deprecations(format)
+        deprecations.each { |deprecation| deprecate(*deprecation) }
       end
 
       def era_conversion
