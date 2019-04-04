@@ -133,7 +133,7 @@ module JapaneseCalendar
       end
 
       def era_pattern
-        @era_pattern ||= Regexp.union(era_conversion.keys)
+        Regexp.union(era_conversion.keys)
       end
   end
 end
