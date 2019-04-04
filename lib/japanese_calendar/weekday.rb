@@ -27,10 +27,9 @@ module JapaneseCalendar
         '%q' => 'Please use %Ja instead.'
       }.freeze
 
-      DEPRECATION_PATTERN = Regexp.union(DEPRECATIONS.keys)
-
       def collect_weekday_deprecations(format)
-        deprecated_directives = format.scan(DEPRECATION_PATTERN).uniq
+        deprecation_pattern = Regexp.union(DEPRECATIONS.keys)
+        deprecated_directives = format.scan(deprecation_pattern).uniq
         DEPRECATIONS.slice(*deprecated_directives)
       end
 
