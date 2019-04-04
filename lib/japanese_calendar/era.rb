@@ -6,6 +6,30 @@ module JapaneseCalendar
   module Era
     include Deprecator
 
+    Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
+
+    MEIJI_6 = Date.new(1873, 1, 1)
+
+    DEPRECATIONS = {
+      '%K' => 'Please use %JN instead.',
+      '%O' => 'Please use %JR instead.',
+      '%^O' => 'Please use %^JR instead.',
+      '%o' => 'Please use %Jr instead.',
+      '%J' => 'Please use %Jy instead.',
+      '%-J' => 'Please use %-Jy instead.',
+      '%_J' => 'Please use %_Jy instead.'
+    }.freeze
+
+    PERIODS = [
+      Period.new(Date.new(2019,  5,  1), '令和', 'Reiwa').freeze,
+      Period.new(Date.new(1989,  1,  8), '平成', 'Heisei').freeze,
+      Period.new(Date.new(1926, 12, 25), '昭和', 'Showa').freeze,
+      Period.new(Date.new(1912,  7, 30), '大正', 'Taisho').freeze,
+      Period.new(Date.new(1868,  1, 25), '明治', 'Meiji').freeze
+    ].freeze
+
+    private_constant :Period, :MEIJI_6, :DEPRECATIONS, :PERIODS
+
     # Returns the Japanese era name (nengo) since 1 January 1873 (Meiji 6).
     #
     #   reiwa = Time.new(2019, 5, 1)   # => 2019-05-01 00:00:00 +0900
@@ -78,28 +102,6 @@ module JapaneseCalendar
     end
 
     private
-
-    Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
-
-    PERIODS = [
-      Period.new(Date.new(2019,  5,  1), '令和', 'Reiwa').freeze,
-      Period.new(Date.new(1989,  1,  8), '平成', 'Heisei').freeze,
-      Period.new(Date.new(1926, 12, 25), '昭和', 'Showa').freeze,
-      Period.new(Date.new(1912,  7, 30), '大正', 'Taisho').freeze,
-      Period.new(Date.new(1868,  1, 25), '明治', 'Meiji').freeze
-    ].freeze
-
-    MEIJI_6 = Date.new(1873, 1, 1)
-
-    DEPRECATIONS = {
-      '%K' => 'Please use %JN instead.',
-      '%O' => 'Please use %JR instead.',
-      '%^O' => 'Please use %^JR instead.',
-      '%o' => 'Please use %Jr instead.',
-      '%J' => 'Please use %Jy instead.',
-      '%-J' => 'Please use %-Jy instead.',
-      '%_J' => 'Please use %_Jy instead.'
-    }.freeze
 
     def collect_era_deprecations(format)
       deprecation_pattern = Regexp.union(DEPRECATIONS.keys)

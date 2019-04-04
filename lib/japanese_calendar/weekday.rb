@@ -4,6 +4,13 @@ module JapaneseCalendar
   module Weekday
     include Deprecator
 
+    DEPRECATIONS = {
+      '%Q' => 'Please use %JA instead.',
+      '%q' => 'Please use %Ja instead.'
+    }.freeze
+
+    private_constant :DEPRECATIONS
+
     # Formats time according to the directives in the given format string.
     #
     #   date_of_birth = Time.new(1978, 7, 19)
@@ -21,11 +28,6 @@ module JapaneseCalendar
     end
 
     private
-
-    DEPRECATIONS = {
-      '%Q' => 'Please use %JA instead.',
-      '%q' => 'Please use %Ja instead.'
-    }.freeze
 
     def collect_weekday_deprecations(format)
       deprecation_pattern = Regexp.union(DEPRECATIONS.keys)
