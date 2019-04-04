@@ -20,6 +20,26 @@ module JapaneseCalendar
 
     private_constant :Period, :MEIJI_6, :PERIODS
 
+    # Formats time according to the directives in the given format string.
+    #
+    #   date_of_birth = Time.new(1978, 7, 19)
+    #
+    #   date_of_birth.strftime("%JN")  # => "昭和"
+    #   date_of_birth.strftime("%JR")  # => "Showa"
+    #   date_of_birth.strftime("%^JR") # => "SHOWA"
+    #   date_of_birth.strftime("%Jr")  # => "S"
+    #   date_of_birth.strftime("%Jy")  # => "53"
+    #
+    #   date_of_birth.strftime("%JN%-Jy年")  # => "昭和53年"
+    #
+    # Raises an error when the Japanese year cannot be found.
+    #
+    #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
+    def strftime(format)
+      string = format.gsub(era_pattern, era_conversion)
+      super(string)
+    end
+
     # Returns the Japanese era name (nengo) since 1 January 1873 (Meiji 6).
     #
     #   reiwa = Time.new(2019, 5, 1)   # => 2019-05-01 00:00:00 +0900
@@ -66,26 +86,6 @@ module JapaneseCalendar
     #   Time.new(1872, 12, 31).era_year # => RuntimeError
     def era_year
       year - current_era.beginning_of_period.year + 1
-    end
-
-    # Formats time according to the directives in the given format string.
-    #
-    #   date_of_birth = Time.new(1978, 7, 19)
-    #
-    #   date_of_birth.strftime("%JN")  # => "昭和"
-    #   date_of_birth.strftime("%JR")  # => "Showa"
-    #   date_of_birth.strftime("%^JR") # => "SHOWA"
-    #   date_of_birth.strftime("%Jr")  # => "S"
-    #   date_of_birth.strftime("%Jy")  # => "53"
-    #
-    #   date_of_birth.strftime("%JN%-Jy年")  # => "昭和53年"
-    #
-    # Raises an error when the Japanese year cannot be found.
-    #
-    #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
-    def strftime(format)
-      string = format.gsub(era_pattern, era_conversion)
-      super(string)
     end
 
     private
