@@ -36,7 +36,7 @@ module JapaneseCalendar
       end
 
       def weekday_abbreviation
-        @weekday_abbreviation ||= weekday_name[0]
+        weekday_name[0]
       end
 
       def weekday_conversion
@@ -49,7 +49,7 @@ module JapaneseCalendar
       end
 
       def weekday_pattern
-        @weekday_pattern ||= Regexp.union(weekday_conversion.keys)
+        Regexp.union(weekday_conversion.keys)
       end
   end
 end
