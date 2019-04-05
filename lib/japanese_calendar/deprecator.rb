@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module JapaneseCalendar
-  module Deprecator
+  module Deprecator #:nodoc:
     private
 
     def deprecate(directive, message)
