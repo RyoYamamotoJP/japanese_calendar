@@ -10,8 +10,8 @@ module JapaneseCalendar
     prepend Era::Deprecator
     include Era::Calculations
 
-    # Formats the year of Japanese era according to the directives in the given
-    # format string.
+    # Formats the year of the Japanese era according to the directives in the
+    # given format string.
     #
     # Format directives:
     #   %JN - The full Japanese era name in Kanji ("令和")
@@ -43,6 +43,7 @@ module JapaneseCalendar
 
     private
 
+    # Returns a hash representing the format directives of the Japanese era.
     def era_conversion
       {
         '%JN' => era_kanji_name,
@@ -62,6 +63,9 @@ module JapaneseCalendar
       }
     end
 
+    # Returns a Regexp object representing the format directives of
+    # the day of the week
+    # (/%JN|%JR|%^JR|%Jr|%Jy|%-Jy|%_Jy|%K|%O|%^O|%o|%J|%-J|%_J/).
     def era_pattern
       Regexp.union(era_conversion.keys)
     end
