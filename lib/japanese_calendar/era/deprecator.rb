@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'japanese_calendar/deprecator'
+require 'japanese_calendar/deprecation/reporting'
 
 module JapaneseCalendar
   module Era
     module Deprecator #:nodoc:
-      include JapaneseCalendar::Deprecator
+      include JapaneseCalendar::Deprecation::Reporting
 
       DEPRECATIONS = {
         '%K' => 'Please use %JN instead.',
