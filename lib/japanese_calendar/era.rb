@@ -3,6 +3,8 @@
 require 'japanese_calendar/era/deprecator'
 
 module JapaneseCalendar
+  # Era extensions to <tt>Date</tt>, <tt>DateTime</tt> and
+  # <tt>Time</tt>.
   module Era
     prepend Era::Deprecator
 
@@ -20,8 +22,19 @@ module JapaneseCalendar
 
     private_constant :Period, :MEIJI_6, :PERIODS
 
-    # Formats time according to the directives in the given format string.
+    # Formats the year of Japanese era according to the directives in the given
+    # format string.
     #
+    # Format directives:
+    #   %JN - The full Japanese era name in Kanji ("令和")
+    #   %JR - The full Japanese era name in Romaji ("Reiwa")
+    #           %^JR  uppercased ("REIWA")
+    #   %Jr - The abbreviated Japanese era name in Romaji ("R")
+    #   %Jy - year of the Japanese era, zero-padded (01)
+    #           %_Jy  blank-padded ( 1)
+    #           %-Jy  no-padded (1)
+    #
+    # Examples:
     #   date_of_birth = Time.new(1978, 7, 19)
     #
     #   date_of_birth.strftime("%JN")  # => "昭和"
@@ -73,7 +86,7 @@ module JapaneseCalendar
       current_era.send("#{character}_name")
     end
 
-    # Returns the Japanese year since 1 January 1873 (Meiji 6).
+    # Returns the year of the Japanese era since 1 January 1873 (Meiji 6).
     #
     #   Time.new(2019,  5,  1).era_year # => 1
     #   Time.new(2019,  4, 30).era_year # => 31
@@ -81,7 +94,7 @@ module JapaneseCalendar
     #   Time.new(1926, 12, 24).era_year # => 15
     #   Time.new(1912,  7, 29).era_year # => 45
     #
-    # Raises an error when the Japanese year cannot be found.
+    # Raises an error when the year of the Japanese era cannot be found.
     #
     #   Time.new(1872, 12, 31).era_year # => RuntimeError
     def era_year

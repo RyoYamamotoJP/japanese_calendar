@@ -4,7 +4,7 @@ require 'japanese_calendar/deprecator'
 
 module JapaneseCalendar
   module Weekday
-    module Deprecator
+    module Deprecator #:nodoc:
       include JapaneseCalendar::Deprecator
 
       DEPRECATIONS = {
