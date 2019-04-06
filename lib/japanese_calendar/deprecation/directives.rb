@@ -3,11 +3,13 @@
 require 'japanese_calendar/deprecation/reporting'
 
 module JapaneseCalendar
-  module Era
-    module Deprecator #:nodoc:
+  module Deprecation
+    module Directives #:nodoc:
       include JapaneseCalendar::Deprecation::Reporting
 
-      DEPRECATIONS = {
+      MESSAGES = {
+        '%Q' => 'Please use %JA instead.',
+        '%q' => 'Please use %Ja instead.',
         '%K' => 'Please use %JN instead.',
         '%O' => 'Please use %JR instead.',
         '%^O' => 'Please use %^JR instead.',
@@ -17,20 +19,20 @@ module JapaneseCalendar
         '%_J' => 'Please use %_Jy instead.'
       }.freeze
 
-      private_constant :DEPRECATIONS
+      private_constant :MESSAGES
 
       def strftime(format)
-        deprecations = collect_era_deprecations(format)
+        deprecations = collect_japanese_era_deprecations(format)
         deprecations.each { |deprecation| deprecate(*deprecation) }
         super(format)
       end
 
       private
 
-      def collect_era_deprecations(format)
-        deprecation_pattern = Regexp.union(DEPRECATIONS.keys)
-        deprecated_directives = format.scan(deprecation_pattern).uniq
-        DEPRECATIONS.select do |directive, _|
+      def collect_japanese_era_deprecations(format)
+        message_key_pattern = Regexp.union(MESSAGES.keys)
+        deprecated_directives = format.scan(message_key_pattern).uniq
+        MESSAGES.select do |directive, _|
           deprecated_directives.include?(directive)
         end
       end

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
+require 'japanese_calendar/deprecation/directives'
 require 'japanese_calendar/era/calculations'
-require 'japanese_calendar/era/deprecator'
 
 module JapaneseCalendar
   # Era extensions to <tt>Date</tt>, <tt>DateTime</tt> and
   # <tt>Time</tt>.
   module Era
-    prepend Era::Deprecator
+    prepend Deprecation::Directives
     include Era::Calculations
 
     # Formats the year of the Japanese era according to the directives in the
