@@ -90,7 +90,7 @@ module JapaneseCalendar
 
       # Returns a string representing the uppercased full name of the Japanese
       # era in Romaji ("REIWA").
-      def era_romaji_upcase_name
+      def era_romaji_uppercased_name
         era_romaji_name.upcase
       end
 

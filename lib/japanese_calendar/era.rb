@@ -48,7 +48,7 @@ module JapaneseCalendar
       {
         '%JN' => era_kanji_name,
         '%JR' => era_romaji_name,
-        '%^JR' => era_romaji_upcase_name,
+        '%^JR' => era_romaji_uppercased_name,
         '%Jr' => era_romaji_abbreviation,
         '%Jy' => era_year_zero_padded_string,
         '%-Jy' => era_year_string,
@@ -56,7 +56,7 @@ module JapaneseCalendar
         # The following directives are deprecated.
         '%K' => era_kanji_name,
         '%O' => era_romaji_name,
-        '%^O' => era_romaji_upcase_name,
+        '%^O' => era_romaji_uppercased_name,
         '%o' => era_romaji_abbreviation,
         '%J' => era_year_zero_padded_string,
         '%-J' => era_year_string,
