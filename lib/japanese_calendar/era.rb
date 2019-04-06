@@ -53,6 +53,7 @@ module JapaneseCalendar
         '%Jy' => era_year_zero_padded_string,
         '%-Jy' => era_year_string,
         '%_Jy' => era_year_blank_padded_string,
+        # The following directives are deprecated.
         '%K' => era_kanji_name,
         '%O' => era_romaji_name,
         '%^O' => era_romaji_upcase_name,

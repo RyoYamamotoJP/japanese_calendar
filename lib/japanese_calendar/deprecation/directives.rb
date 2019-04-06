@@ -8,8 +8,10 @@ module JapaneseCalendar
       include JapaneseCalendar::Deprecation::Reporting
 
       MESSAGES = {
+        # Weekday deprecation directives and their messages
         '%Q' => 'Please use %JA instead.',
         '%q' => 'Please use %Ja instead.',
+        # Era deprecation directives and their messages
         '%K' => 'Please use %JN instead.',
         '%O' => 'Please use %JR instead.',
         '%^O' => 'Please use %^JR instead.',

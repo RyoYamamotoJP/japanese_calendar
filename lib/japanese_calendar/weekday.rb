@@ -35,6 +35,7 @@ module JapaneseCalendar
       {
         '%JA' => weekday_name,
         '%Ja' => weekday_abbreviation,
+        # The following directives are deprecated.
         '%Q' => weekday_name,
         '%q' => weekday_abbreviation
       }
