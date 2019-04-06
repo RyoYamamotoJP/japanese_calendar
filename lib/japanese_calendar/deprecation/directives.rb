@@ -7,11 +7,12 @@ module JapaneseCalendar
     module Directives #:nodoc:
       include JapaneseCalendar::Deprecation::Reporting
 
-      MESSAGES = {
-        # Weekday deprecation directives and their messages
+      WEEKDAY_MESSAGES = {
         '%Q' => 'Please use %JA instead.',
-        '%q' => 'Please use %Ja instead.',
-        # Era deprecation directives and their messages
+        '%q' => 'Please use %Ja instead.'
+      }.freeze
+
+      ERA_MESSAGES = {
         '%K' => 'Please use %JN instead.',
         '%O' => 'Please use %JR instead.',
         '%^O' => 'Please use %^JR instead.',
@@ -21,9 +22,11 @@ module JapaneseCalendar
         '%_J' => 'Please use %_Jy instead.'
       }.freeze
 
+      MESSAGES = WEEKDAY_MESSAGES.merge(ERA_MESSAGES).freeze
+
       PATTERN = Regexp.union(MESSAGES.keys)
 
-      private_constant :MESSAGES, :PATTERN
+      private_constant :WEEKDAY_MESSAGES, :ERA_MESSAGES, :MESSAGES, :PATTERN
 
       def strftime(format)
         deprecations = collect_japanese_era_deprecations(format)
