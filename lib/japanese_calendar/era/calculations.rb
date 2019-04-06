@@ -2,7 +2,7 @@
 
 module JapaneseCalendar
   module Era
-    # calc
+    # Calculations module.
     module Calculations
       Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
 
@@ -76,30 +76,43 @@ module JapaneseCalendar
         end
       end
 
+      # Returns a string representing the full name of the Japanese era in
+      # Kanji ("令和").
       def era_kanji_name
         era_name(:kanji)
       end
 
+      # Returns a string representing the full name of the Japanese era in
+      # Romaji ("Reiwa").
       def era_romaji_name
         era_name(:romaji)
       end
 
+      # Returns a string representing the uppercased full name of the Japanese
+      # era in Romaji ("REIWA").
       def era_romaji_upcase_name
         era_romaji_name.upcase
       end
 
+      # Returns a string representing the abbreviated name of the Japanese era
+      # in Romaji ("R").
       def era_romaji_abbreviation
         era_romaji_name[0]
       end
 
+      # Returns a string representing the year of the Japanese era ("1")
       def era_year_string
         '%-d' % era_year
       end
 
+      # Returns a string representing the zero-padded year of the Japanese era
+      # ("01").
       def era_year_zero_padded_string
         '%02d' % era_year
       end
 
+      # Returns a string representing the blank-padded year of the Japanese era
+      # (" 1").
       def era_year_blank_padded_string
         '%2d' % era_year
       end
