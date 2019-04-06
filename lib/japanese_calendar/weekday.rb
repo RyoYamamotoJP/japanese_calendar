@@ -34,15 +34,12 @@ module JapaneseCalendar
     def weekday_conversion
       {
         '%JA' => weekday_name,
-        '%Ja' => weekday_abbreviation,
-        # The following directives are deprecated.
-        '%Q' => weekday_name,
-        '%q' => weekday_abbreviation
+        '%Ja' => weekday_abbreviation
       }
     end
 
     # Returns a Regexp object representing the format directives of
-    # the day of the week (/%JA|%Ja|%Q|%q/).
+    # the day of the week (/%JA|%Ja/).
     def weekday_pattern
       Regexp.union(weekday_conversion.keys)
     end

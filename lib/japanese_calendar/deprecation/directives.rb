@@ -29,9 +29,10 @@ module JapaneseCalendar
       private_constant :WEEKDAY_MESSAGES, :ERA_MESSAGES, :MESSAGES, :PATTERN
 
       def strftime(format)
-        deprecations = collect_japanese_era_deprecations(format)
+        string = super(format)
+        deprecations = collect_japanese_era_deprecations(string)
         deprecations.each { |deprecation| deprecate(*deprecation) }
-        super(format)
+        string.gsub(deprecated_pattern, deprecated_conversion)
       end
 
       private
@@ -41,6 +42,33 @@ module JapaneseCalendar
         MESSAGES.select do |directive, _|
           deprecated_directives.include?(directive)
         end
+      end
+
+      def deprecated_weekday_conversion
+        {
+          '%Q' => weekday_name,
+          '%q' => weekday_abbreviation
+        }
+      end
+
+      def deprecated_era_conversion
+        {
+          '%K' => era_kanji_name,
+          '%O' => era_romaji_name,
+          '%^O' => era_romaji_uppercased_name,
+          '%o' => era_romaji_abbreviation,
+          '%J' => era_year_zero_padded_string,
+          '%-J' => era_year_string,
+          '%_J' => era_year_blank_padded_string
+        }
+      end
+
+      def deprecated_conversion
+        deprecated_weekday_conversion.merge(deprecated_era_conversion)
+      end
+
+      def deprecated_pattern
+        Regexp.union(deprecated_conversion.keys)
       end
     end
   end
