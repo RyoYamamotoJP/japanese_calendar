@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
+require 'japanese_calendar/deprecation/directives'
 require 'japanese_calendar/era/calculations'
-require 'japanese_calendar/era/deprecator'
 
 module JapaneseCalendar
   # Era extensions to <tt>Date</tt>, <tt>DateTime</tt> and
   # <tt>Time</tt>.
   module Era
-    prepend Era::Deprecator
+    prepend Deprecation::Directives
     include Era::Calculations
 
     # Formats the year of the Japanese era according to the directives in the
@@ -37,8 +37,8 @@ module JapaneseCalendar
     #
     #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
     def strftime(format)
-      string = format.gsub(era_pattern, era_conversion)
-      super(string)
+      string = super(format)
+      string.gsub(era_pattern, era_conversion)
     end
 
     private
@@ -48,24 +48,17 @@ module JapaneseCalendar
       {
         '%JN' => era_kanji_name,
         '%JR' => era_romaji_name,
-        '%^JR' => era_romaji_upcase_name,
+        '%^JR' => era_romaji_uppercased_name,
         '%Jr' => era_romaji_abbreviation,
         '%Jy' => era_year_zero_padded_string,
         '%-Jy' => era_year_string,
-        '%_Jy' => era_year_blank_padded_string,
-        '%K' => era_kanji_name,
-        '%O' => era_romaji_name,
-        '%^O' => era_romaji_upcase_name,
-        '%o' => era_romaji_abbreviation,
-        '%J' => era_year_zero_padded_string,
-        '%-J' => era_year_string,
-        '%_J' => era_year_blank_padded_string
+        '%_Jy' => era_year_blank_padded_string
       }
     end
 
     # Returns a Regexp object representing the format directives of
     # the day of the week
-    # (/%JN|%JR|%^JR|%Jr|%Jy|%-Jy|%_Jy|%K|%O|%^O|%o|%J|%-J|%_J/).
+    # (/%JN|%JR|%^JR|%Jr|%Jy|%-Jy|%_Jy/).
     def era_pattern
       Regexp.union(era_conversion.keys)
     end

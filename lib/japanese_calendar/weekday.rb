@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
+require 'japanese_calendar/deprecation/directives'
 require 'japanese_calendar/weekday/calculations'
-require 'japanese_calendar/weekday/deprecator'
 
 module JapaneseCalendar
   # Weekday extensions to <tt>Date</tt>, <tt>DateTime</tt> and <tt>Time</tt>.
   module Weekday
-    prepend Weekday::Deprecator
+    prepend Deprecation::Directives
     include Weekday::Calculations
 
     # Formats the day of the week according to the directives in the given
@@ -24,8 +24,8 @@ module JapaneseCalendar
     #
     #   date_of_birth.strftime("%-Y年%-m月%-d日(%Ja)") # => "1978年7月19日(水)"
     def strftime(format)
-      string = format.gsub(weekday_pattern, weekday_conversion)
-      super(string)
+      string = super(format)
+      string.gsub(weekday_pattern, weekday_conversion)
     end
 
     private
@@ -34,14 +34,12 @@ module JapaneseCalendar
     def weekday_conversion
       {
         '%JA' => weekday_name,
-        '%Ja' => weekday_abbreviation,
-        '%Q' => weekday_name,
-        '%q' => weekday_abbreviation
+        '%Ja' => weekday_abbreviation
       }
     end
 
     # Returns a Regexp object representing the format directives of
-    # the day of the week (/%JA|%Ja|%Q|%q/).
+    # the day of the week (/%JA|%Ja/).
     def weekday_pattern
       Regexp.union(weekday_conversion.keys)
     end
