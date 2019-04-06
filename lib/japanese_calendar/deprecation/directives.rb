@@ -19,7 +19,9 @@ module JapaneseCalendar
         '%_J' => 'Please use %_Jy instead.'
       }.freeze
 
-      private_constant :MESSAGES
+      PATTERN = Regexp.union(MESSAGES.keys)
+
+      private_constant :MESSAGES, :PATTERN
 
       def strftime(format)
         deprecations = collect_japanese_era_deprecations(format)
@@ -30,8 +32,7 @@ module JapaneseCalendar
       private
 
       def collect_japanese_era_deprecations(format)
-        message_key_pattern = Regexp.union(MESSAGES.keys)
-        deprecated_directives = format.scan(message_key_pattern).uniq
+        deprecated_directives = format.scan(PATTERN).uniq
         MESSAGES.select do |directive, _|
           deprecated_directives.include?(directive)
         end
