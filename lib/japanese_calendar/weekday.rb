@@ -24,8 +24,8 @@ module JapaneseCalendar
     #
     #   date_of_birth.strftime("%-Y年%-m月%-d日(%Ja)") # => "1978年7月19日(水)"
     def strftime(format)
-      string = format.gsub(weekday_pattern, weekday_conversion)
-      super(string)
+      string = super(format)
+      string.gsub(weekday_pattern, weekday_conversion)
     end
 
     private

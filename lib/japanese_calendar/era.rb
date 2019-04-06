@@ -37,8 +37,8 @@ module JapaneseCalendar
     #
     #   Time.new(1872, 12, 31).strftime("%JN%-Jy年") # => RuntimeError
     def strftime(format)
-      string = format.gsub(era_pattern, era_conversion)
-      super(string)
+      string = super(format)
+      string.gsub(era_pattern, era_conversion)
     end
 
     private
