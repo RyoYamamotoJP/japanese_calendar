@@ -70,9 +70,9 @@ module JapaneseCalendar
 
       def current_era
         error_proc = proc { raise "#{self.class.name.downcase} out of range" }
-        error_proc.call if self.to_date < MEIJI_6
+        error_proc.call if to_date < MEIJI_6
         PERIODS.find(error_proc) do |period|
-          period.beginning_of_period <= self.to_date
+          period.beginning_of_period <= to_date
         end
       end
 
