@@ -82,6 +82,12 @@ module JapaneseCalendar
         era_name(:kanji)
       end
 
+      # Returns a string representing the abbreviated name of the Japanese era
+      # in Kanji ("令").
+      def era_kanji_abbreviation
+        era_kanji_name[0]
+      end
+
       # Returns a string representing the full name of the Japanese era in
       # Romaji ("Reiwa").
       def era_romaji_name

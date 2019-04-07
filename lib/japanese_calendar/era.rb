@@ -15,6 +15,7 @@ module JapaneseCalendar
     #
     # Format directives:
     #   %JN - The full Japanese era name in Kanji ("令和")
+    #   %Jn - The abbreviated Japanese era name in Kanji ("令")
     #   %JR - The full Japanese era name in Romaji ("Reiwa")
     #           %^JR  uppercased ("REIWA")
     #   %Jr - The abbreviated Japanese era name in Romaji ("R")
@@ -26,6 +27,7 @@ module JapaneseCalendar
     #   date_of_birth = Time.new(1978, 7, 19)
     #
     #   date_of_birth.strftime("%JN")  # => "昭和"
+    #   date_of_birth.strftime("%Jn")  # => "昭"
     #   date_of_birth.strftime("%JR")  # => "Showa"
     #   date_of_birth.strftime("%^JR") # => "SHOWA"
     #   date_of_birth.strftime("%Jr")  # => "S"
@@ -47,6 +49,7 @@ module JapaneseCalendar
     def era_conversion
       {
         '%JN' => era_kanji_name,
+        '%Jn' => era_kanji_abbreviation,
         '%JR' => era_romaji_name,
         '%^JR' => era_romaji_uppercased_name,
         '%Jr' => era_romaji_abbreviation,
@@ -58,7 +61,7 @@ module JapaneseCalendar
 
     # Returns a Regexp object representing the format directives of
     # the day of the week
-    # (/%JN|%JR|%^JR|%Jr|%Jy|%-Jy|%_Jy/).
+    # (/%JN|%Jn|%JR|%^JR|%Jr|%Jy|%-Jy|%_Jy/).
     def era_pattern
       Regexp.union(era_conversion.keys)
     end
