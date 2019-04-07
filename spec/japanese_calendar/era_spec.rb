@@ -233,6 +233,14 @@ describe JapaneseCalendar::Era do
         end
       end
 
+      context 'with %Jn format' do
+        let(:format) { '%Jn' }
+
+        it 'returns the abbreviated era name' do
+          expect(time.strftime(format)).to eq('令')
+        end
+      end
+
       context 'with %JR format' do
         let(:format) { '%JR' }
 
