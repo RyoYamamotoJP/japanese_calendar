@@ -15,7 +15,7 @@ module JapaneseCalendar
     #
     # Format directives:
     #   %JN - The full Japanese era name in Kanji ("令和")
-    #   %Jr - The abbreviated Japanese era name in Kanji ("令")
+    #   %Jn - The abbreviated Japanese era name in Kanji ("令")
     #   %JR - The full Japanese era name in Romaji ("Reiwa")
     #           %^JR  uppercased ("REIWA")
     #   %Jr - The abbreviated Japanese era name in Romaji ("R")
@@ -61,7 +61,7 @@ module JapaneseCalendar
 
     # Returns a Regexp object representing the format directives of
     # the day of the week
-    # (/%JN|%JR|%^JR|%Jr|%Jy|%-Jy|%_Jy/).
+    # (/%JN|%Jn|%JR|%^JR|%Jr|%Jy|%-Jy|%_Jy/).
     def era_pattern
       Regexp.union(era_conversion.keys)
     end
