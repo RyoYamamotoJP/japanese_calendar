@@ -57,6 +57,7 @@ time = Time.new(2019, 5, 1)
 
 # Japanese era
 time.strftime("%JN")  # => "令和"
+time.strftime("%Jn")  # => "令"
 time.strftime("%JR")  # => "Reiwa"
 time.strftime("%^JR") # => "REIWA"
 time.strftime("%Jr")  # => "R"
