@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'japanese_calendar/deprecation/directives'
+require 'japanese_calendar/deprecation/weekday_wrapper'
 require 'japanese_calendar/weekday/calculations'
 
 module JapaneseCalendar
   # Weekday extensions to <tt>Date</tt>, <tt>DateTime</tt> and <tt>Time</tt>.
   module Weekday
-    prepend Deprecation::Directives
+    prepend Deprecation::WeekdayWrapper
     include Weekday::Calculations
 
     # Formats the day of the week according to the directives in the given
