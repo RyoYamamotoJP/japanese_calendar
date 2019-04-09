@@ -3,6 +3,12 @@
 require 'spec_helper'
 
 describe JapaneseCalendar::Era do
+  shared_context 'during the Meiji period' do
+    let(:period) do
+      described_class.new(1873, 1, 1)..described_class.new(1912, 7, 29)
+    end
+  end
+
   shared_examples 'a era' do
     describe '#era_name' do
       context 'in the Reiwa period' do
@@ -95,15 +101,14 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
-        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
+        include_context 'during the Meiji period'
 
         context 'in kanji' do
           let(:character) { :kanji }
 
           it 'returns "明治"' do
-            expect(beginning_of_period.era_name(character)).to eq('明治')
-            expect(end_of_period.era_name(character)).to       eq('明治')
+            expect(period.first.era_name(character)).to eq('明治')
+            expect(period.last.era_name(character)).to  eq('明治')
           end
         end
 
@@ -111,8 +116,8 @@ describe JapaneseCalendar::Era do
           let(:character) { :romaji }
 
           it 'returns "Meiji"' do
-            expect(beginning_of_period.era_name(character)).to eq('Meiji')
-            expect(end_of_period.era_name(character)).to       eq('Meiji')
+            expect(period.first.era_name(character)).to eq('Meiji')
+            expect(period.last.era_name(character)).to  eq('Meiji')
           end
         end
       end
@@ -262,12 +267,11 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
-        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
+        include_context 'during the Meiji period'
 
         it 'returns false' do
-          expect(beginning_of_period.reiwa?).to be(false)
-          expect(end_of_period.reiwa?).to       be(false)
+          expect(period.first.reiwa?).to be(false)
+          expect(period.last.reiwa?).to  be(false)
         end
       end
 
@@ -320,12 +324,11 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
-        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
+        include_context 'during the Meiji period'
 
         it 'returns false' do
-          expect(beginning_of_period.heisei?).to be(false)
-          expect(end_of_period.heisei?).to       be(false)
+          expect(period.first.heisei?).to be(false)
+          expect(period.last.heisei?).to  be(false)
         end
       end
 
@@ -378,12 +381,11 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
-        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
+        include_context 'during the Meiji period'
 
         it 'returns false' do
-          expect(beginning_of_period.showa?).to be(false)
-          expect(end_of_period.showa?).to       be(false)
+          expect(period.first.showa?).to be(false)
+          expect(period.last.showa?).to  be(false)
         end
       end
 
@@ -436,12 +438,11 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
-        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
+        include_context 'during the Meiji period'
 
         it 'returns false' do
-          expect(beginning_of_period.taisho?).to be(false)
-          expect(end_of_period.taisho?).to       be(false)
+          expect(period.first.taisho?).to be(false)
+          expect(period.last.taisho?).to  be(false)
         end
       end
 
@@ -494,12 +495,11 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
-        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
+        include_context 'during the Meiji period'
 
         it 'returns true' do
-          expect(beginning_of_period.meiji?).to be(true)
-          expect(end_of_period.meiji?).to       be(true)
+          expect(period.first.meiji?).to be(true)
+          expect(period.last.meiji?).to  be(true)
         end
       end
 
