@@ -3,6 +3,12 @@
 require 'spec_helper'
 
 describe JapaneseCalendar::Era do
+  shared_context 'during the Heisei period' do
+    let(:period) do
+      described_class.new(1989, 1, 8)..described_class.new(2019, 4, 30)
+    end
+  end
+
   shared_context 'during the Showa period' do
     let(:period) do
       described_class.new(1926, 12, 25)..described_class.new(1989, 1, 7)
@@ -44,15 +50,14 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
-        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+        include_context 'during the Heisei period'
 
         context 'in kanji' do
           let(:character) { :kanji }
 
           it 'returns "平成"' do
-            expect(beginning_of_period.era_name(character)).to eq('平成')
-            expect(end_of_period.era_name(character)).to       eq('平成')
+            expect(period.first.era_name(character)).to eq('平成')
+            expect(period.last.era_name(character)).to  eq('平成')
           end
         end
 
@@ -60,8 +65,8 @@ describe JapaneseCalendar::Era do
           let(:character) { :romaji }
 
           it 'returns "Heisei"' do
-            expect(beginning_of_period.era_name(character)).to eq('Heisei')
-            expect(end_of_period.era_name(character)).to       eq('Heisei')
+            expect(period.first.era_name(character)).to eq('Heisei')
+            expect(period.last.era_name(character)).to  eq('Heisei')
           end
         end
       end
@@ -247,12 +252,11 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
-        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+        include_context 'during the Heisei period'
 
         it 'returns false' do
-          expect(beginning_of_period.reiwa?).to be(false)
-          expect(end_of_period.reiwa?).to       be(false)
+          expect(period.first.reiwa?).to be(false)
+          expect(period.last.reiwa?).to  be(false)
         end
       end
 
@@ -302,12 +306,11 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
-        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+        include_context 'during the Heisei period'
 
         it 'returns true' do
-          expect(beginning_of_period.heisei?).to be(true)
-          expect(end_of_period.heisei?).to       be(true)
+          expect(period.first.heisei?).to be(true)
+          expect(period.last.heisei?).to  be(true)
         end
       end
 
@@ -357,12 +360,11 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
-        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+        include_context 'during the Heisei period'
 
         it 'returns false' do
-          expect(beginning_of_period.showa?).to be(false)
-          expect(end_of_period.showa?).to       be(false)
+          expect(period.first.showa?).to be(false)
+          expect(period.last.showa?).to  be(false)
         end
       end
 
@@ -412,12 +414,11 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
-        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+        include_context 'during the Heisei period'
 
         it 'returns false' do
-          expect(beginning_of_period.taisho?).to be(false)
-          expect(end_of_period.taisho?).to       be(false)
+          expect(period.first.taisho?).to be(false)
+          expect(period.last.taisho?).to  be(false)
         end
       end
 
@@ -467,12 +468,11 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
-        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+        include_context 'during the Heisei period'
 
         it 'returns false' do
-          expect(beginning_of_period.meiji?).to be(false)
-          expect(end_of_period.meiji?).to       be(false)
+          expect(period.first.meiji?).to be(false)
+          expect(period.last.meiji?).to  be(false)
         end
       end
 
