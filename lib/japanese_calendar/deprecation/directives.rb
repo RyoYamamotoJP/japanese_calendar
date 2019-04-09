@@ -7,31 +7,32 @@ module JapaneseCalendar
     module Directives #:nodoc:
       include JapaneseCalendar::Deprecation::Reporting
 
-      WEEKDAY_MESSAGES = {
-        '%Q' => 'Please use %JA instead.',
-        '%q' => 'Please use %Ja instead.'
+      WEEKDAY_DIRECTIVES = {
+        '%Q' => '%JA',
+        '%q' => '%Ja'
       }.freeze
 
-      ERA_MESSAGES = {
-        '%K' => 'Please use %JN instead.',
-        '%O' => 'Please use %JR instead.',
-        '%^O' => 'Please use %^JR instead.',
-        '%o' => 'Please use %Jr instead.',
-        '%J' => 'Please use %Jy instead.',
-        '%-J' => 'Please use %-Jy instead.',
-        '%_J' => 'Please use %_Jy instead.'
+      ERA_DIRECTIVES = {
+        '%K' => '%JN',
+        '%O' => '%JR',
+        '%^O' => '%^JR',
+        '%o' => '%Jr',
+        '%J' => '%Jy',
+        '%-J' => '%-Jy',
+        '%_J' => '%_Jy'
       }.freeze
 
-      MESSAGES = WEEKDAY_MESSAGES.merge(ERA_MESSAGES).freeze
+      DIRECTIVES = WEEKDAY_DIRECTIVES.merge(ERA_DIRECTIVES).freeze
 
-      PATTERN = Regexp.union(MESSAGES.keys)
+      PATTERN = Regexp.union(DIRECTIVES.keys)
 
-      private_constant :WEEKDAY_MESSAGES, :ERA_MESSAGES, :MESSAGES, :PATTERN
+      private_constant :WEEKDAY_DIRECTIVES, :ERA_DIRECTIVES, :DIRECTIVES,
+                       :PATTERN
 
       def strftime(format)
         string = super(format)
         deprecations = collect_japanese_era_deprecations(string)
-        deprecations.each { |deprecation| deprecate(*deprecation) }
+        deprecations.each { |deprecation| deprecate_directive(*deprecation) }
         string.gsub(deprecated_pattern, deprecated_conversion)
       end
 
@@ -39,7 +40,7 @@ module JapaneseCalendar
 
       def collect_japanese_era_deprecations(format)
         deprecated_directives = format.scan(PATTERN).uniq
-        MESSAGES.select do |directive, _|
+        DIRECTIVES.select do |directive, _|
           deprecated_directives.include?(directive)
         end
       end
