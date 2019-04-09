@@ -3,31 +3,31 @@
 require 'japanese_calendar/deprecation/reporting'
 
 module JapaneseCalendar
-  module Deprecation
-    module Directives #:nodoc:
+  module Deprecation #:nodoc: all
+    WEEKDAY_DIRECTIVES = {
+      '%Q' => '%JA',
+      '%q' => '%Ja'
+    }.freeze
+
+    ERA_DIRECTIVES = {
+      '%K' => '%JN',
+      '%O' => '%JR',
+      '%^O' => '%^JR',
+      '%o' => '%Jr',
+      '%J' => '%Jy',
+      '%-J' => '%-Jy',
+      '%_J' => '%_Jy'
+    }.freeze
+
+    DIRECTIVES = WEEKDAY_DIRECTIVES.merge(ERA_DIRECTIVES).freeze
+
+    PATTERN = Regexp.union(DIRECTIVES.keys)
+
+    private_constant :WEEKDAY_DIRECTIVES, :ERA_DIRECTIVES, :DIRECTIVES,
+                     :PATTERN
+
+    module Directives
       include JapaneseCalendar::Deprecation::Reporting
-
-      WEEKDAY_DIRECTIVES = {
-        '%Q' => '%JA',
-        '%q' => '%Ja'
-      }.freeze
-
-      ERA_DIRECTIVES = {
-        '%K' => '%JN',
-        '%O' => '%JR',
-        '%^O' => '%^JR',
-        '%o' => '%Jr',
-        '%J' => '%Jy',
-        '%-J' => '%-Jy',
-        '%_J' => '%_Jy'
-      }.freeze
-
-      DIRECTIVES = WEEKDAY_DIRECTIVES.merge(ERA_DIRECTIVES).freeze
-
-      PATTERN = Regexp.union(DIRECTIVES.keys)
-
-      private_constant :WEEKDAY_DIRECTIVES, :ERA_DIRECTIVES, :DIRECTIVES,
-                       :PATTERN
 
       def strftime(format)
         string = super(format)
