@@ -4,11 +4,6 @@ require 'japanese_calendar/deprecation/reporting'
 
 module JapaneseCalendar
   module Deprecation #:nodoc: all
-    WEEKDAY_DIRECTIVES = {
-      '%Q' => '%JA',
-      '%q' => '%Ja'
-    }.freeze
-
     ERA_DIRECTIVES = {
       '%K' => '%JN',
       '%O' => '%JR',
@@ -19,37 +14,28 @@ module JapaneseCalendar
       '%_J' => '%_Jy'
     }.freeze
 
-    DIRECTIVES = WEEKDAY_DIRECTIVES.merge(ERA_DIRECTIVES).freeze
+    ERA_PATTERN = Regexp.union(ERA_DIRECTIVES.keys)
 
-    PATTERN = Regexp.union(DIRECTIVES.keys)
+    private_constant :ERA_DIRECTIVES, :ERA_PATTERN
 
-    private_constant :WEEKDAY_DIRECTIVES, :ERA_DIRECTIVES, :DIRECTIVES,
-                     :PATTERN
-
-    module Directives
+    # Prepend wrapper for Era module
+    module EraWrapper
       include JapaneseCalendar::Deprecation::Reporting
 
       def strftime(format)
         string = super(format)
-        deprecations = collect_japanese_era_deprecations(string)
+        deprecations = collect_era_deprecations(string)
         deprecations.each { |deprecation| deprecate_directive(*deprecation) }
-        string.gsub(deprecated_pattern, deprecated_conversion)
+        string.gsub(deprecated_era_pattern, deprecated_era_conversion)
       end
 
       private
 
-      def collect_japanese_era_deprecations(format)
-        deprecated_directives = format.scan(PATTERN).uniq
-        DIRECTIVES.select do |directive, _|
+      def collect_era_deprecations(format)
+        deprecated_directives = format.scan(ERA_PATTERN).uniq
+        ERA_DIRECTIVES.select do |directive, _|
           deprecated_directives.include?(directive)
         end
-      end
-
-      def deprecated_weekday_conversion
-        {
-          '%Q' => weekday_name,
-          '%q' => weekday_abbreviation
-        }
       end
 
       def deprecated_era_conversion
@@ -64,12 +50,8 @@ module JapaneseCalendar
         }
       end
 
-      def deprecated_conversion
-        deprecated_weekday_conversion.merge(deprecated_era_conversion)
-      end
-
-      def deprecated_pattern
-        Regexp.union(deprecated_conversion.keys)
+      def deprecated_era_pattern
+        Regexp.union(deprecated_era_conversion.keys)
       end
     end
   end
