@@ -6,8 +6,8 @@ require 'japanese_calendar/weekday/calculations'
 module JapaneseCalendar
   # Weekday extensions to <tt>Date</tt>, <tt>DateTime</tt> and <tt>Time</tt>.
   module Weekday
-    prepend Deprecation::WeekdayWrapper
     include Weekday::Calculations
+    prepend Deprecation::WeekdayWrapper
 
     # Formats the day of the week according to the directives in the given
     # format string.
