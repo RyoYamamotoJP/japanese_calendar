@@ -26,7 +26,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
         let(:end_of_period)       { subject.class.new(2019, 4, 30) }
 
         context 'in kanji' do
@@ -50,7 +50,7 @@ describe JapaneseCalendar::Era do
 
       context 'in the Showa period' do
         let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
-        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+        let(:end_of_period)       { subject.class.new(1989, 1, 7) }
 
         context 'in kanji' do
           let(:character) { :kanji }
@@ -72,7 +72,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Taisho period' do
-        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:beginning_of_period) { subject.class.new(1912, 7, 30) }
         let(:end_of_period)       { subject.class.new(1926, 12, 24) }
 
         context 'in kanji' do
@@ -95,8 +95,8 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
-        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
+        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
 
         context 'in kanji' do
           let(:character) { :kanji }
@@ -232,7 +232,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
         let(:end_of_period)       { subject.class.new(2019, 4, 30) }
 
         it 'returns false' do
@@ -243,7 +243,7 @@ describe JapaneseCalendar::Era do
 
       context 'in the Showa period' do
         let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
-        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+        let(:end_of_period)       { subject.class.new(1989, 1, 7) }
 
         it 'returns false' do
           expect(beginning_of_period.reiwa?).to be(false)
@@ -252,7 +252,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Taisho period' do
-        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:beginning_of_period) { subject.class.new(1912, 7, 30) }
         let(:end_of_period)       { subject.class.new(1926, 12, 24) }
 
         it 'returns false' do
@@ -262,8 +262,8 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
-        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
+        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
 
         it 'returns false' do
           expect(beginning_of_period.reiwa?).to be(false)
@@ -290,7 +290,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
         let(:end_of_period)       { subject.class.new(2019, 4, 30) }
 
         it 'returns true' do
@@ -301,7 +301,7 @@ describe JapaneseCalendar::Era do
 
       context 'in the Showa period' do
         let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
-        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+        let(:end_of_period)       { subject.class.new(1989, 1, 7) }
 
         it 'returns false' do
           expect(beginning_of_period.heisei?).to be(false)
@@ -310,7 +310,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Taisho period' do
-        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:beginning_of_period) { subject.class.new(1912, 7, 30) }
         let(:end_of_period)       { subject.class.new(1926, 12, 24) }
 
         it 'returns false' do
@@ -320,8 +320,8 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
-        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
+        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
 
         it 'returns false' do
           expect(beginning_of_period.heisei?).to be(false)
@@ -348,7 +348,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
         let(:end_of_period)       { subject.class.new(2019, 4, 30) }
 
         it 'returns false' do
@@ -359,7 +359,7 @@ describe JapaneseCalendar::Era do
 
       context 'in the Showa period' do
         let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
-        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+        let(:end_of_period)       { subject.class.new(1989, 1, 7) }
 
         it 'returns true' do
           expect(beginning_of_period.showa?).to be(true)
@@ -368,7 +368,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Taisho period' do
-        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:beginning_of_period) { subject.class.new(1912, 7, 30) }
         let(:end_of_period)       { subject.class.new(1926, 12, 24) }
 
         it 'returns false' do
@@ -378,8 +378,8 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
-        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
+        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
 
         it 'returns false' do
           expect(beginning_of_period.showa?).to be(false)
@@ -406,7 +406,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
         let(:end_of_period)       { subject.class.new(2019, 4, 30) }
 
         it 'returns false' do
@@ -417,7 +417,7 @@ describe JapaneseCalendar::Era do
 
       context 'in the Showa period' do
         let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
-        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+        let(:end_of_period)       { subject.class.new(1989, 1, 7) }
 
         it 'returns false' do
           expect(beginning_of_period.taisho?).to be(false)
@@ -426,7 +426,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Taisho period' do
-        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:beginning_of_period) { subject.class.new(1912, 7, 30) }
         let(:end_of_period)       { subject.class.new(1926, 12, 24) }
 
         it 'returns true' do
@@ -436,8 +436,8 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
-        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
+        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
 
         it 'returns false' do
           expect(beginning_of_period.taisho?).to be(false)
@@ -464,7 +464,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Heisei period' do
-        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:beginning_of_period) { subject.class.new(1989, 1, 8) }
         let(:end_of_period)       { subject.class.new(2019, 4, 30) }
 
         it 'returns false' do
@@ -475,7 +475,7 @@ describe JapaneseCalendar::Era do
 
       context 'in the Showa period' do
         let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
-        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+        let(:end_of_period)       { subject.class.new(1989, 1, 7) }
 
         it 'returns false' do
           expect(beginning_of_period.meiji?).to be(false)
@@ -484,7 +484,7 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Taisho period' do
-        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:beginning_of_period) { subject.class.new(1912, 7, 30) }
         let(:end_of_period)       { subject.class.new(1926, 12, 24) }
 
         it 'returns false' do
@@ -494,8 +494,8 @@ describe JapaneseCalendar::Era do
       end
 
       context 'in the Meiji period' do
-        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
-        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+        let(:beginning_of_period) { subject.class.new(1873, 1, 1) }
+        let(:end_of_period)       { subject.class.new(1912, 7, 29) }
 
         it 'returns true' do
           expect(beginning_of_period.meiji?).to be(true)
