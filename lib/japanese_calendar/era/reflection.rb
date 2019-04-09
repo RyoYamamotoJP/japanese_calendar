@@ -3,6 +3,8 @@
 module JapaneseCalendar
   module Era
     module Reflection #:nodoc:
+      include Era::Calculations
+
       PERIODS.each do |period|
         define_method "#{period.romaji_name.downcase}?" do
           begin
