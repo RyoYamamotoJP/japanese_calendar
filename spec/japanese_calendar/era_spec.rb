@@ -222,6 +222,296 @@ describe JapaneseCalendar::Era do
       end
     end
 
+    describe '#reiwa?' do
+      context 'in the Reiwa period' do
+        let(:beginning_of_period) { subject.class.new(2019, 5, 1) }
+
+        it 'returns true' do
+          expect(beginning_of_period.reiwa?).to be(true)
+        end
+      end
+
+      context 'in the Heisei period' do
+        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+
+        it 'returns false' do
+          expect(beginning_of_period.reiwa?).to be(false)
+          expect(end_of_period.reiwa?).to       be(false)
+        end
+      end
+
+      context 'in the Showa period' do
+        let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
+        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+
+        it 'returns false' do
+          expect(beginning_of_period.reiwa?).to be(false)
+          expect(end_of_period.reiwa?).to       be(false)
+        end
+      end
+
+      context 'in the Taisho period' do
+        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:end_of_period)       { subject.class.new(1926, 12, 24) }
+
+        it 'returns false' do
+          expect(beginning_of_period.reiwa?).to be(false)
+          expect(end_of_period.reiwa?).to       be(false)
+        end
+      end
+
+      context 'in the Meiji period' do
+        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
+        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+
+        it 'returns false' do
+          expect(beginning_of_period.reiwa?).to be(false)
+          expect(end_of_period.reiwa?).to       be(false)
+        end
+      end
+
+      context 'before 1 January 1873 (Meiji 6)' do
+        let(:before_meiji_6) { subject.class.new(1872, 12, 31) }
+
+        it 'returns false' do
+          expect(before_meiji_6.reiwa?).to be(false)
+        end
+      end
+    end
+
+    describe '#heisei?' do
+      context 'in the Reiwa period' do
+        let(:beginning_of_period) { subject.class.new(2019, 5, 1) }
+
+        it 'returns false' do
+          expect(beginning_of_period.heisei?).to be(false)
+        end
+      end
+
+      context 'in the Heisei period' do
+        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+
+        it 'returns true' do
+          expect(beginning_of_period.heisei?).to be(true)
+          expect(end_of_period.heisei?).to       be(true)
+        end
+      end
+
+      context 'in the Showa period' do
+        let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
+        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+
+        it 'returns false' do
+          expect(beginning_of_period.heisei?).to be(false)
+          expect(end_of_period.heisei?).to       be(false)
+        end
+      end
+
+      context 'in the Taisho period' do
+        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:end_of_period)       { subject.class.new(1926, 12, 24) }
+
+        it 'returns false' do
+          expect(beginning_of_period.heisei?).to be(false)
+          expect(end_of_period.heisei?).to       be(false)
+        end
+      end
+
+      context 'in the Meiji period' do
+        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
+        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+
+        it 'returns false' do
+          expect(beginning_of_period.heisei?).to be(false)
+          expect(end_of_period.heisei?).to       be(false)
+        end
+      end
+
+      context 'before 1 January 1873 (Meiji 6)' do
+        let(:before_meiji_6) { subject.class.new(1872, 12, 31) }
+
+        it 'returns false' do
+          expect(before_meiji_6.heisei?).to be(false)
+        end
+      end
+    end
+
+    describe '#showa?' do
+      context 'in the Reiwa period' do
+        let(:beginning_of_period) { subject.class.new(2019, 5, 1) }
+
+        it 'returns false' do
+          expect(beginning_of_period.showa?).to be(false)
+        end
+      end
+
+      context 'in the Heisei period' do
+        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+
+        it 'returns false' do
+          expect(beginning_of_period.showa?).to be(false)
+          expect(end_of_period.showa?).to       be(false)
+        end
+      end
+
+      context 'in the Showa period' do
+        let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
+        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+
+        it 'returns true' do
+          expect(beginning_of_period.showa?).to be(true)
+          expect(end_of_period.showa?).to       be(true)
+        end
+      end
+
+      context 'in the Taisho period' do
+        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:end_of_period)       { subject.class.new(1926, 12, 24) }
+
+        it 'returns false' do
+          expect(beginning_of_period.showa?).to be(false)
+          expect(end_of_period.showa?).to       be(false)
+        end
+      end
+
+      context 'in the Meiji period' do
+        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
+        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+
+        it 'returns false' do
+          expect(beginning_of_period.showa?).to be(false)
+          expect(end_of_period.showa?).to       be(false)
+        end
+      end
+
+      context 'before 1 January 1873 (Meiji 6)' do
+        let(:before_meiji_6) { subject.class.new(1872, 12, 31) }
+
+        it 'returns false' do
+          expect(before_meiji_6.showa?).to be(false)
+        end
+      end
+    end
+
+    describe '#taisho?' do
+      context 'in the Reiwa period' do
+        let(:beginning_of_period) { subject.class.new(2019, 5, 1) }
+
+        it 'returns false' do
+          expect(beginning_of_period.taisho?).to be(false)
+        end
+      end
+
+      context 'in the Heisei period' do
+        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+
+        it 'returns false' do
+          expect(beginning_of_period.taisho?).to be(false)
+          expect(end_of_period.taisho?).to       be(false)
+        end
+      end
+
+      context 'in the Showa period' do
+        let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
+        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+
+        it 'returns false' do
+          expect(beginning_of_period.taisho?).to be(false)
+          expect(end_of_period.taisho?).to       be(false)
+        end
+      end
+
+      context 'in the Taisho period' do
+        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:end_of_period)       { subject.class.new(1926, 12, 24) }
+
+        it 'returns true' do
+          expect(beginning_of_period.taisho?).to be(true)
+          expect(end_of_period.taisho?).to       be(true)
+        end
+      end
+
+      context 'in the Meiji period' do
+        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
+        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+
+        it 'returns false' do
+          expect(beginning_of_period.taisho?).to be(false)
+          expect(end_of_period.taisho?).to       be(false)
+        end
+      end
+
+      context 'before 1 January 1873 (Meiji 6)' do
+        let(:before_meiji_6) { subject.class.new(1872, 12, 31) }
+
+        it 'returns false' do
+          expect(before_meiji_6.taisho?).to be(false)
+        end
+      end
+    end
+
+    describe '#meiji?' do
+      context 'in the Reiwa period' do
+        let(:beginning_of_period) { subject.class.new(2019, 5, 1) }
+
+        it 'returns false' do
+          expect(beginning_of_period.meiji?).to be(false)
+        end
+      end
+
+      context 'in the Heisei period' do
+        let(:beginning_of_period) { subject.class.new(1989, 1,  8) }
+        let(:end_of_period)       { subject.class.new(2019, 4, 30) }
+
+        it 'returns false' do
+          expect(beginning_of_period.meiji?).to be(false)
+          expect(end_of_period.meiji?).to       be(false)
+        end
+      end
+
+      context 'in the Showa period' do
+        let(:beginning_of_period) { subject.class.new(1926, 12, 25) }
+        let(:end_of_period)       { subject.class.new(1989,  1,  7) }
+
+        it 'returns false' do
+          expect(beginning_of_period.meiji?).to be(false)
+          expect(end_of_period.meiji?).to       be(false)
+        end
+      end
+
+      context 'in the Taisho period' do
+        let(:beginning_of_period) { subject.class.new(1912,  7, 30) }
+        let(:end_of_period)       { subject.class.new(1926, 12, 24) }
+
+        it 'returns false' do
+          expect(beginning_of_period.meiji?).to be(false)
+          expect(end_of_period.meiji?).to       be(false)
+        end
+      end
+
+      context 'in the Meiji period' do
+        let(:beginning_of_period) { subject.class.new(1873,  1,  1) }
+        let(:end_of_period)       { subject.class.new(1912,  7, 29) }
+
+        it 'returns true' do
+          expect(beginning_of_period.meiji?).to be(true)
+          expect(end_of_period.meiji?).to       be(true)
+        end
+      end
+
+      context 'before 1 January 1873 (Meiji 6)' do
+        let(:before_meiji_6) { subject.class.new(1872, 12, 31) }
+
+        it 'returns false' do
+          expect(before_meiji_6.meiji?).to be(false)
+        end
+      end
+    end
+
     describe '#strftime' do
       let(:time) { subject.class.new(2019, 5, 1) }
 

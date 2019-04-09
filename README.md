@@ -40,6 +40,16 @@ Time.new(1912,  7, 30).era_name(:romaji) # => "Taisho"
 Time.new(1873,  1,  1).era_name(:romaji) # => "Meiji"
 ```
 
+The following examples show how to check the Japanese era:
+
+```
+Time.new(2019,  5,  1).reiwa?  # => true
+Time.new(1989,  1,  8).heisei? # => true
+Time.new(1926, 12, 25).showa?  # => true
+Time.new(1912,  7, 30).taisho? # => true
+Time.new(1873,  1,  1).meiji?  # => true
+```
+
 You can convert to a Japanese year with the `era_year` method:
 
 ```
