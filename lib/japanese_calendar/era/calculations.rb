@@ -110,19 +110,19 @@ module JapaneseCalendar
 
       # Returns a string representing the year of the Japanese era ("1")
       def era_year_string
-        '%-d' % era_year
+        format('%-d', era_year)
       end
 
       # Returns a string representing the zero-padded year of the Japanese era
       # ("01").
       def era_year_zero_padded_string
-        '%02d' % era_year
+        format('%02d', era_year)
       end
 
       # Returns a string representing the blank-padded year of the Japanese era
       # (" 1").
       def era_year_blank_padded_string
-        '%2d' % era_year
+        format('%2d', era_year)
       end
     end
   end
