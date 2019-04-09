@@ -10,6 +10,18 @@ module JapaneseCalendar
     prepend Deprecation::Directives
     include Era::Calculations
 
+    Period = Struct.new(:beginning_of_period, :kanji_name, :romaji_name)
+
+    PERIODS = [
+      Period.new(Date.new(2019,  5,  1), '令和', 'Reiwa').freeze,
+      Period.new(Date.new(1989,  1,  8), '平成', 'Heisei').freeze,
+      Period.new(Date.new(1926, 12, 25), '昭和', 'Showa').freeze,
+      Period.new(Date.new(1912,  7, 30), '大正', 'Taisho').freeze,
+      Period.new(Date.new(1868,  1, 25), '明治', 'Meiji').freeze
+    ].freeze
+
+    private_constant :Period, :PERIODS
+
     # Formats the year of the Japanese era according to the directives in the
     # given format string.
     #
