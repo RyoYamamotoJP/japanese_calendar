@@ -19,19 +19,18 @@ describe JapaneseCalendar::Weekday do
 
       context 'with "%Q" format', if: (described_class == Time) do
         it "returns \"#{full_name}\" with a warning" do
-          expect(subject.strftime('%Q')).to eq(full_name)
           expect do
-            subject.strftime('%Q')
+            expect(subject.strftime('%Q')).to eq(full_name)
           end.to output(/%Q is deprecated. Please use %JA instead./).to_stderr
         end
       end
 
       context 'with "%q" format' do
         it "returns \"#{abbreviated_name}\" with a warning" do
-          expect(subject.strftime('%q')).to eq(abbreviated_name)
           expect do
-            subject.strftime('%q')
-          end.to output(/%q is deprecated. Please use %Ja instead./).to_stderr
+            expect(subject.strftime('%q')).to eq(abbreviated_name)
+          end.to output(/%q is deprecated. Please use %Ja instead./)
+            .to_stderr
         end
       end
     end
