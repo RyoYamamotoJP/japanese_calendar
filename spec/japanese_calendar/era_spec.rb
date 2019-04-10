@@ -133,9 +133,8 @@ describe JapaneseCalendar::Era do
 
       context 'with "%K" format' do
         it "returns \"#{kanji_full_name}\" with a warning" do
-          expect(subject.strftime('%K')).to eq(kanji_full_name)
           expect do
-            subject.strftime('%K')
+            expect(subject.strftime('%K')).to eq(kanji_full_name)
           end.to output(/%K is deprecated. Please use %JN instead./)
             .to_stderr
         end
@@ -143,9 +142,8 @@ describe JapaneseCalendar::Era do
 
       context 'with "%O" format' do
         it "returns \"#{romaji_full_name}\" with a warning" do
-          expect(subject.strftime('%O')).to eq(romaji_full_name)
           expect do
-            subject.strftime('%O')
+            expect(subject.strftime('%O')).to eq(romaji_full_name)
           end.to output(/%O is deprecated. Please use %JR instead./)
             .to_stderr
         end
@@ -153,9 +151,8 @@ describe JapaneseCalendar::Era do
 
       context 'with "%^O" format' do
         it "returns \"#{romaji_uppercased_name}\" with a warning" do
-          expect(subject.strftime('%^O')).to eq(romaji_uppercased_name)
           expect do
-            subject.strftime('%^O')
+            expect(subject.strftime('%^O')).to eq(romaji_uppercased_name)
           end.to output(/%\^O is deprecated. Please use %\^JR instead./)
             .to_stderr
         end
@@ -163,9 +160,8 @@ describe JapaneseCalendar::Era do
 
       context 'with "%o" format' do
         it "returns \"#{romaji_abbreviated_name}\" with a warning" do
-          expect(subject.strftime('%o')).to eq(romaji_abbreviated_name)
           expect do
-            subject.strftime('%o')
+            expect(subject.strftime('%o')).to eq(romaji_abbreviated_name)
           end.to output(/%o is deprecated. Please use %Jr instead./)
             .to_stderr
         end
@@ -173,9 +169,8 @@ describe JapaneseCalendar::Era do
 
       context 'with "%J" format' do
         it "returns \"#{zero_padded_year_string}\" with a warning" do
-          expect(subject.strftime('%J')).to eq(zero_padded_year_string)
           expect do
-            subject.strftime('%J')
+            expect(subject.strftime('%J')).to eq(zero_padded_year_string)
           end.to output(/%J is deprecated. Please use %Jy instead./)
             .to_stderr
         end
@@ -183,9 +178,8 @@ describe JapaneseCalendar::Era do
 
       context 'with "%-J" format' do
         it "returns \"#{year_string}\" with a warning" do
-          expect(subject.strftime('%-J')).to eq(year_string)
           expect do
-            subject.strftime('%-J')
+            expect(subject.strftime('%-J')).to eq(year_string)
           end.to output(/%-J is deprecated. Please use %-Jy instead./)
             .to_stderr
         end
@@ -193,9 +187,8 @@ describe JapaneseCalendar::Era do
 
       context 'with "%_J" format' do
         it "returns \"#{blank_padded_year_string}\" with a warning" do
-          expect(subject.strftime('%_J')).to eq(blank_padded_year_string)
           expect do
-            subject.strftime('%_J')
+            expect(subject.strftime('%_J')).to eq(blank_padded_year_string)
           end.to output(/%_J is deprecated. Please use %_Jy instead./)
             .to_stderr
         end
