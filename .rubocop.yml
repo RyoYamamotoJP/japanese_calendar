@@ -1,15 +1,7 @@
 AllCops:
   TargetRubyVersion: 2.3
 
-Layout/ExtraSpacing:
-  Exclude:
-    - 'spec/**/*'
-
 Metrics/BlockLength:
-  Exclude:
-    - 'spec/**/*'
-
-Metrics/LineLength:
   Exclude:
     - 'spec/**/*'
 
