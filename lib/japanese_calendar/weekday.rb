@@ -33,8 +33,8 @@ module JapaneseCalendar
     # Returns a hash representing the format directives of the day of the week.
     def weekday_conversion
       {
-        '%JA' => weekday_name,
-        '%Ja' => weekday_abbreviation
+        '%JA' => japanese_weekday_name,
+        '%Ja' => japanese_weekday_abbreviated_name
       }
     end
 

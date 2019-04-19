@@ -35,8 +35,8 @@ module JapaneseCalendar
 
       def deprecated_weekday_conversion
         {
-          '%Q' => weekday_name,
-          '%q' => weekday_abbreviation
+          '%Q' => japanese_weekday_name,
+          '%q' => japanese_weekday_abbreviated_name
         }
       end
 
