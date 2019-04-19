@@ -2,9 +2,9 @@
 
 module JapaneseCalendar
   module Weekday #:nodoc:
-    NAMES = %w[日曜日 月曜日 火曜日 水曜日 木曜日 金曜日 土曜日].freeze
+    ABBREVIATED_NAMES = %w[日 月 火 水 木 金 土].freeze
 
-    private_constant :NAMES
+    private_constant :ABBREVIATED_NAMES
 
     # Calculations module.
     module Calculations
@@ -13,13 +13,13 @@ module JapaneseCalendar
       # Returns a string representing the full name of the day of the week in
       # Japanese ("日曜日").
       def weekday_name
-        NAMES[wday]
+        "#{weekday_abbreviation}曜日"
       end
 
       # Returns a string representing the abbreviated name of the day of the
       # week in Japanese ("日").
       def weekday_abbreviation
-        weekday_name[0]
+        ABBREVIATED_NAMES[wday]
       end
     end
   end
