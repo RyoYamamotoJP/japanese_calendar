@@ -50,14 +50,14 @@ module JapaneseCalendar
     # Returns a hash representing the format directives of the Japanese era.
     def era_conversion
       {
-        '%JN' => era_kanji_name,
-        '%Jn' => era_kanji_abbreviation,
-        '%JR' => era_romaji_name,
-        '%^JR' => era_romaji_uppercased_name,
-        '%Jr' => era_romaji_abbreviation,
-        '%Jy' => era_year_zero_padded_string,
-        '%-Jy' => era_year_string,
-        '%_Jy' => era_year_blank_padded_string
+        '%JN' => japanese_era_kanji_name,
+        '%Jn' => japanese_era_kanji_abbreviated_name,
+        '%JR' => japanese_era_romaji_name,
+        '%^JR' => japanese_era_romaji_uppercased_name,
+        '%Jr' => japanese_era_romaji_abbreviated_name,
+        '%Jy' => japanese_era_year_zero_padded_string,
+        '%-Jy' => japanese_era_year_string,
+        '%_Jy' => japanese_era_year_blank_padded_string
       }
     end
 

@@ -40,13 +40,13 @@ module JapaneseCalendar
 
       def deprecated_era_conversion
         {
-          '%K' => era_kanji_name,
-          '%O' => era_romaji_name,
-          '%^O' => era_romaji_uppercased_name,
-          '%o' => era_romaji_abbreviation,
-          '%J' => era_year_zero_padded_string,
-          '%-J' => era_year_string,
-          '%_J' => era_year_blank_padded_string
+          '%K' => japanese_era_kanji_name,
+          '%O' => japanese_era_romaji_name,
+          '%^O' => japanese_era_romaji_uppercased_name,
+          '%o' => japanese_era_romaji_abbreviated_name,
+          '%J' => japanese_era_year_zero_padded_string,
+          '%-J' => japanese_era_year_string,
+          '%_J' => japanese_era_year_blank_padded_string
         }
       end
 

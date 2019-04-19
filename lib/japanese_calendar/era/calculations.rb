@@ -80,48 +80,48 @@ module JapaneseCalendar
 
       # Returns a string representing the full name of the Japanese era in
       # Kanji ("令和").
-      def era_kanji_name
+      def japanese_era_kanji_name
         era_name(:kanji)
       end
 
       # Returns a string representing the abbreviated name of the Japanese era
       # in Kanji ("令").
-      def era_kanji_abbreviation
-        era_kanji_name[0]
+      def japanese_era_kanji_abbreviated_name
+        japanese_era_kanji_name[0]
       end
 
       # Returns a string representing the full name of the Japanese era in
       # Romaji ("Reiwa").
-      def era_romaji_name
+      def japanese_era_romaji_name
         era_name(:romaji)
       end
 
       # Returns a string representing the uppercased full name of the Japanese
       # era in Romaji ("REIWA").
-      def era_romaji_uppercased_name
-        era_romaji_name.upcase
+      def japanese_era_romaji_uppercased_name
+        japanese_era_romaji_name.upcase
       end
 
       # Returns a string representing the abbreviated name of the Japanese era
       # in Romaji ("R").
-      def era_romaji_abbreviation
-        era_romaji_name[0]
+      def japanese_era_romaji_abbreviated_name
+        japanese_era_romaji_name[0]
       end
 
       # Returns a string representing the year of the Japanese era ("1")
-      def era_year_string
+      def japanese_era_year_string
         format('%-d', era_year)
       end
 
       # Returns a string representing the zero-padded year of the Japanese era
       # ("01").
-      def era_year_zero_padded_string
+      def japanese_era_year_zero_padded_string
         format('%02d', era_year)
       end
 
       # Returns a string representing the blank-padded year of the Japanese era
       # (" 1").
-      def era_year_blank_padded_string
+      def japanese_era_year_blank_padded_string
         format('%2d', era_year)
       end
     end
