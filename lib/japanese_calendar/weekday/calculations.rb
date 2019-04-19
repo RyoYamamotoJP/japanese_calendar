@@ -12,13 +12,13 @@ module JapaneseCalendar
 
       # Returns a string representing the full name of the day of the week in
       # Japanese ("日曜日").
-      def weekday_name
-        "#{weekday_abbreviation}曜日"
+      def japanese_weekday_name
+        "#{japanese_weekday_abbreviated_name}曜日"
       end
 
       # Returns a string representing the abbreviated name of the day of the
       # week in Japanese ("日").
-      def weekday_abbreviation
+      def japanese_weekday_abbreviated_name
         ABBREVIATED_NAMES[wday]
       end
     end
